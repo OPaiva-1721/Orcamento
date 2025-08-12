@@ -305,16 +305,10 @@ export default async function handler(req, res) {
     const mailOptions = {
       from: process.env.EMAIL_USER,
       to: destinatarioEmail,
-      subject: `Orçamento ${orcamento.id} - Águia Soluções`,
+      subject: `Orçamento Solicitado - Águia Soluções`,
       html: `
-        <h2>Orçamento ${orcamento.id}</h2>
-        <p>Prezado(a) ${orcamento.destinatario.nome},</p>
-        <p>Segue em anexo o orçamento solicitado.</p>
-        <p><strong>Cliente:</strong> ${orcamento.cliente.nome}</p>
-        <p><strong>Descrição:</strong> ${orcamento.descricao}</p>
-        <p><strong>Valor:</strong> R$ ${orcamento.preco.toFixed(2).replace('.', ',')}</p>
-        <p><strong>Forma de Pagamento:</strong> ${orcamento.formaPagamento}</p>
-        <br>
+        <p>Bom dia Sr(a) ${orcamento.destinatario.nome}, segue em anexo o orçamento solicitado.</p>
+        <p>Qualquer dúvida estamos à disposição.</p>
         <p>Atenciosamente,</p>
         <p>Águia Soluções em Montagens e Manutenções Industriais Ltda.</p>
         <p>Telefone: (44) 9 9828-0425</p>

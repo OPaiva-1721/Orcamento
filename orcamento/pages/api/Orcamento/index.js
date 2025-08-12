@@ -4,6 +4,19 @@ import puppeteer from 'puppeteer';
 
 const prisma = new PrismaClient();
 
+// Função para obter saudação baseada no horário
+function obterSaudacao() {
+  const hora = new Date().getHours();
+  
+  if (hora >= 5 && hora < 12) {
+    return 'Bom dia';
+  } else if (hora >= 12 && hora < 18) {
+    return 'Boa tarde';
+  } else {
+    return 'Boa noite';
+  }
+}
+
 // Função para gerar PDF
 async function gerarPDF(orcamento) {
   const browser = await puppeteer.launch({
@@ -14,249 +27,106 @@ async function gerarPDF(orcamento) {
 
   const htmlContent = `
     <!DOCTYPE html>
-    <html>
-    <head>
-      <meta charset="UTF-8">
-      <style>
-        .component-1,
-        .component-1 * {
-          box-sizing: border-box;
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Orçamento</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
-        .component-1 {
-          height: 786px;
-          position: relative;
+        body {
+            font-family: "Roboto", sans-serif;
+            background-color: #fffbfb;
         }
-        .rectangle-1 {
-          background: #fffbfb;
-          width: 100%;
-          height: 100%;
-          position: absolute;
-          right: 0%;
-          left: 0%;
-          bottom: 0%;
-          top: 0%;
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 10px;
         }
-        .guia-solu-es-em-montagens-e-manuten-es-industriais-ltda {
-          color: #000000;
-          text-align: left;
-          font-family: "Roboto-Medium", sans-serif;
-          font-size: 36px;
-          font-weight: 550;
-          text-transform: uppercase;
-          position: absolute;
-          right: 1.99%;
-          left: 1.99%;
-          width: 96.02%;
-          bottom: 78.24%;
-          top: 13.61%;
-          height: 8.14%;
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
         }
-        .cnpj {
-          color: #000000;
-          text-align: left;
-          font-family: "Roboto-Medium", sans-serif;
-          font-size: 22px;
-          font-weight: 550;
-          text-transform: uppercase;
-          position: absolute;
-          right: 21.71%;
-          left: 1.83%;
-          width: 76.45%;
-          bottom: 71.37%;
-          top: 26.84%;
-          height: 1.78%;
+        .header img {
+            width: 80px;
+            margin-bottom: 10px;
         }
-        .telefone {
-          color: #000000;
-          text-align: left;
-          font-family: "Roboto-Medium", sans-serif;
-          font-size: 22px;
-          font-weight: 550;
-          text-transform: uppercase;
-          position: absolute;
-          right: 23.7%;
-          left: 1.83%;
-          width: 74.46%;
-          bottom: 65.9%;
-          top: 32.32%;
-          height: 1.78%;
+        .title {
+            font-size: 36px;
+            font-weight: 550;
+            text-transform: uppercase;
+            color: #000000;
+            margin-bottom: 20px;
         }
-        .endere-o {
-          color: #000000;
-          text-align: left;
-          font-family: "Roboto-Medium", sans-serif;
-          font-size: 22px;
-          font-weight: 550;
-          position: absolute;
-          right: 40.06%;
-          left: 1.68%;
-          width: 58.26%;
-          bottom: 59.54%;
-          top: 37.53%;
-          height: 2.93%;
-          display: flex;
-          align-items: center;
-          justify-content: flex-start;
+        .info {
+            font-size: 22px;
+            font-weight: 550;
+            color: #000000;
+            margin-bottom: 10px;
         }
-        .bairro {
-          color: #000000;
-          text-align: left;
-          font-family: "Roboto-Medium", sans-serif;
-          font-size: 22px;
-          font-weight: 550;
-          text-transform: uppercase;
-          position: absolute;
-          right: 38.23%;
-          left: 1.68%;
-          width: 60.09%;
-          bottom: 53.94%;
-          top: 43.13%;
-          height: 2.93%;
-          display: flex;
-          align-items: center;
-          justify-content: flex-start;
+        .divider {
+            border-top: 1px solid #ddd;
+            margin: 20px 0;
         }
-        .cidade {
-          color: #000000;
-          text-align: left;
-          font-family: "Roboto-Medium", sans-serif;
-          font-size: 22px;
-          font-weight: 550;
-          text-transform: uppercase;
-          position: absolute;
-          right: 45.26%;
-          left: 1.83%;
-          width: 52.91%;
-          bottom: 48.47%;
-          top: 48.6%;
-          height: 2.93%;
+        .client-info, .budget-info {
+            margin-bottom: 20px;
         }
-        .div {
-          color: #000000;
-          text-align: left;
-          font-family: "Roboto-Medium", sans-serif;
-          font-size: 22px;
-          font-weight: 550;
-          position: absolute;
-          right: 0.61%;
-          left: 1.68%;
-          width: 97.71%;
-          bottom: 43.77%;
-          top: 55.47%;
-          height: 0.76%;
-          display: flex;
-          align-items: center;
-          justify-content: flex-start;
+        .total {
+            font-size: 24px;
+            font-weight: 700;
+            color: #000000;
+            margin-top: 10px;
         }
-        .cliente {
-          color: #000000;
-          text-align: left;
-          font-family: "Roboto-Medium", sans-serif;
-          font-size: 22px;
-          font-weight: 550;
-          position: absolute;
-          right: 47.4%;
-          left: 1.83%;
-          width: 50.76%;
-          bottom: 37.66%;
-          top: 60.05%;
-          height: 2.29%;
-          display: flex;
-          align-items: center;
-          justify-content: flex-start;
-        }
-        .or-amento {
-          color: #000000;
-          text-align: left;
-          font-family: "Roboto-Medium", sans-serif;
-          font-size: 22px;
-          font-weight: 550;
-          position: absolute;
-          right: 54.89%;
-          left: 1.83%;
-          width: 43.27%;
-          bottom: 31.81%;
-          top: 66.28%;
-          height: 1.91%;
-          display: flex;
-          align-items: center;
-          justify-content: flex-start;
-        }
-        .descri-o {
-          color: #000000;
-          text-align: left;
-          font-family: "Roboto-Medium", sans-serif;
-          font-size: 22px;
-          font-weight: 550;
-          position: absolute;
-          right: 12.23%;
-          left: 1.68%;
-          width: 86.09%;
-          bottom: 21.12%;
-          top: 77.35%;
-          height: 1.53%;
-          display: flex;
-          align-items: center;
-          justify-content: flex-start;
-        }
-        .valor {
-          color: #000000;
-          text-align: left;
-          font-family: "Roboto-Medium", sans-serif;
-          font-size: 22px;
-          font-weight: 550;
-          position: absolute;
-          right: 72.17%;
-          left: 1.99%;
-          width: 25.84%;
-          bottom: 9.41%;
-          top: 87.66%;
-          height: 2.93%;
-          display: flex;
-          align-items: center;
-          justify-content: flex-start;
-        }
-        .forma-de-pagamento {
-          color: #000000;
-          text-align: left;
-          font-family: "Roboto-Medium", sans-serif;
-          font-size: 22px;
-          font-weight: 550;
-          position: absolute;
-          right: 8.41%;
-          left: 1.83%;
-          width: 89.76%;
-          bottom: 4.45%;
-          top: 93.38%;
-          height: 2.16%;
-          display: flex;
-          align-items: center;
-          justify-content: flex-start;
-        }
-      </style>
-    </head>
-    <body>
-      <div class="component-1">
-        <div class="rectangle-1"></div>
-        <div class="guia-solu-es-em-montagens-e-manuten-es-industriais-ltda">
-          Águia soluções em montagens e manutenções industriais ltda.
-        </div>
-        <div class="cnpj">CNPJ:53.956.317/0001-62 IE:91054587-60</div>
-        <div class="telefone">Telefone:(44)9 9828-0425– Robson Neves</div>
-        <div class="endere-o">ENDEREÇO:Rua Luiz Donin,3366</div>
-        <div class="bairro">BAIRRO:Jardim Progresso</div>
-        <div class="cidade">CIDADE:Palotina-PR</div>
-        <div class="div">========================================================</div>
-        <div class="cliente">Cliente: ${orcamento.cliente.nome}</div> 
-        <div class="or-amento">Orçamento: ${orcamento.id}</div>
-        <div class="descri-o">Descrição: ${orcamento.descricao}</div>
-        <div class="valor">Valor: R$ ${orcamento.preco.toFixed(2).replace('.', ',')}</div>
-        <div class="forma-de-pagamento">
-          Forma de pagamento: ${orcamento.formaPagamento}
-        </div>
-      </div>
-    </body>
-    </html>
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- Header -->
+    <div class="header">
+        <img src="logo.png" alt="Logo da Empresa">
+        <div class="title">Águia Soluções em Montagens e Manutenções Industriais Ltda.</div>
+    </div>
+
+    <!-- Informações da empresa -->
+    <div class="info">CNPJ: 53.956.317/0001-62 | IE: 91054587-60</div>
+    <div class="info">Telefone: (44) 9 9828-0425 – Robson Neves</div>
+    <div class="info">Endereço: Rua Luiz Donin, 3366</div>
+    <div class="info">Bairro: Jardim Progresso</div>
+    <div class="info">Cidade: Palotina-PR</div>
+
+    <div class="divider"></div>
+
+    <!-- Informações do orçamento -->
+    <div class="client-info">
+        <div class="info">Cliente: ${orcamento.cliente.nome}</div>
+        <div class="info">Orçamento: ${orcamento.id}</div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- Descrição do serviço -->
+    <div class="budget-info">
+        <div class="info">Descrição: ${orcamento.descricao}</div>
+        <div class="info">Valor: R$ ${orcamento.preco.toFixed(2).replace('.', ',')}</div>
+        <div class="info">Forma de Pagamento: 07 dias após a emissão da nota fiscal.</div>
+    </div>
+
+    <div class="total">
+        <p>Total: R$ ${orcamento.preco.toFixed(2).replace('.', ',')}</p>
+    </div>
+</div>
+
+</body>
+</html>
   `;
 
   await page.setContent(htmlContent);
@@ -270,7 +140,7 @@ async function gerarPDF(orcamento) {
 
 // Função para enviar email
 async function enviarEmail(orcamento, pdfBuffer) {
-  const transporter = nodemailer.createTransporter({
+  const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
       user: process.env.EMAIL_USER,
@@ -283,17 +153,30 @@ async function enviarEmail(orcamento, pdfBuffer) {
     to: orcamento.destinatario.email,
     subject: `Orçamento ${orcamento.id} - Águia Soluções`,
     html: `
-      <h2>Orçamento ${orcamento.id}</h2>
-      <p>Prezado(a) ${orcamento.destinatario.nome},</p>
-      <p>Segue em anexo o orçamento solicitado.</p>
-      <p><strong>Cliente:</strong> ${orcamento.cliente.nome}</p>
-      <p><strong>Descrição:</strong> ${orcamento.descricao}</p>
-      <p><strong>Valor:</strong> R$ ${orcamento.preco.toFixed(2).replace('.', ',')}</p>
-      <p><strong>Forma de Pagamento:</strong> ${orcamento.formaPagamento}</p>
-      <br>
-      <p>Atenciosamente,</p>
-      <p>Águia Soluções em Montagens e Manutenções Industriais Ltda.</p>
-      <p>Telefone: (44) 9 9828-0425</p>
+      <div style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; background-color: #f8f9fa; border-radius: 8px;">
+        <div style="background-color: #ffffff; padding: 30px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+          <div style="text-align: center; margin-bottom: 30px;">
+            <h1 style="color: #2c3e50; font-size: 24px; margin: 0; font-weight: 600;">Águia Soluções</h1>
+            <p style="color: #7f8c8d; margin: 5px 0; font-size: 14px;">Montagens e Manutenções Industriais Ltda.</p>
+          </div>
+          
+                     <div style="border-left: 4px solid #3498db; padding-left: 20px; margin: 20px 0;">
+             <p style="font-size: 16px; color: #2c3e50; margin: 0 0 15px 0; line-height: 1.6;">
+               <strong>${obterSaudacao()} Sr.(a) ${orcamento.destinatario.nome}</strong>, segue em anexo o orçamento solicitado.
+             </p>
+           </div>
+          
+          <p style="color: #7f8c8d; font-size: 14px; margin: 20px 0; text-align: center;">
+            Qualquer dúvida estamos à disposição.
+          </p>
+          
+          <div style="border-top: 1px solid #ecf0f1; padding-top: 20px; margin-top: 20px;">
+            <p style="color: #2c3e50; margin: 5px 0; font-size: 14px; font-weight: 600;">Atenciosamente,</p>
+            <p style="color: #2c3e50; margin: 5px 0; font-size: 14px; font-weight: 600;">Águia Soluções em Montagens e Manutenções Industriais Ltda.</p>
+            <p style="color: #3498db; margin: 5px 0; font-size: 14px;">📞 Telefone: (44) 9 9828-0425</p>
+          </div>
+        </div>
+      </div>
     `,
     attachments: [
       {
