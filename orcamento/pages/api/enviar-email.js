@@ -1,6 +1,6 @@
 import nodemailer from 'nodemailer';
 import puppeteer from 'puppeteer';
-import { PrismaClient } from '../../../../generated/prisma';
+import { PrismaClient } from '../../../generated/prisma';
 
 const prisma = new PrismaClient();
 
@@ -31,12 +31,32 @@ export default async function handler(req, res) {
       return res.status(404).json({ message: 'Orçamento não encontrado' });
     }
 
+    // Carregar e converter logo para base64
+    let logoBase64 = '';
+    try {
+      const logoPath = path.join(process.cwd(), 'public', 'logoaguia.png');
+      console.log('Tentando carregar logo de:', logoPath);
+      
+      if (fs.existsSync(logoPath)) {
+        console.log('Logo encontrada, carregando...');
+        const logoBuffer = fs.readFileSync(logoPath);
+        logoBase64 = `data:image/png;base64,${logoBuffer.toString('base64')}`;
+        console.log('Logo convertida para base64, tamanho:', logoBase64.length);
+      } else {
+        console.log('Logo não encontrada em:', logoPath);
+      }
+    } catch (error) {
+      console.log('Erro ao carregar logo:', error.message);
+    }
+
     // Gerar PDF
     const browser = await puppeteer.launch({
       headless: true,
       args: ['--no-sandbox', '--disable-setuid-sandbox']
     });
     const page = await browser.newPage();
+
+    console.log('Logo base64 disponível:', logoBase64 ? 'Sim' : 'Não');
 
     const htmlContent = `
       <!DOCTYPE html>
@@ -66,16 +86,26 @@ export default async function handler(req, res) {
             color: #000000;
             text-align: left;
             font-family: "Roboto-Medium", sans-serif;
-            font-size: 36px;
-            font-weight: 550;
+            font-size: 34px;
+            font-weight: 500;
             text-transform: uppercase;
             position: absolute;
             right: 1.99%;
             left: 1.99%;
             width: 96.02%;
             bottom: 78.24%;
-            top: 13.61%;
+            top: 16%;
             height: 8.14%;
+          }
+          .logo-empresa {
+            width: 45%;       
+            height: auto;
+            position: absolute;
+            right: 80.7%;
+            left: -12%;        
+            top: -15px;     
+            object-fit: contain;
+            max-height: 250px;  
           }
           .cnpj {
             color: #000000;
@@ -267,7 +297,8 @@ export default async function handler(req, res) {
           <div class="guia-solu-es-em-montagens-e-manuten-es-industriais-ltda">
             Águia soluções em montagens e manutenções industriais ltda.
           </div>
-          <div class="cnpj">CNPJ:53.956.317/0001-62 IE:91054587-60</div>
+          ${logoBase64 ? `<img class="logo-empresa" src="${logoBase64}" alt="Logo da Empresa" />` : ''}
+          <div class="cnpj">CNPJ: 53.956.317/0001-62 | IE: 91054587-60</div>
           <div class="telefone">Telefone:(44)9 9828-0425– Robson Neves</div>
           <div class="endere-o">ENDEREÇO:Rua Luiz Donin,3366</div>
           <div class="bairro">BAIRRO:Jardim Progresso</div>
