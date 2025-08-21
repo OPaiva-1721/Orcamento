@@ -93,7 +93,7 @@ Todos os PDFs do sistema agora seguem o **mesmo layout padrão**:
 ## 📋 **Exemplo de Uso:**
 
 ```javascript
-// Todos os PDFs agora têm o mesmo visual
+// Todos os PDFs têm o mesmo visual
 const pdf1 = await fetch('/api/Orcamento', { method: 'POST', body: dados });
 const pdf2 = await fetch('/api/gerar-pdf', { method: 'POST', body: { orcamentoId: 123 } });
 const pdf3 = await fetch('/api/enviar-email', { method: 'POST', body: { orcamentoId: 123, email: 'cliente@email.com' } });

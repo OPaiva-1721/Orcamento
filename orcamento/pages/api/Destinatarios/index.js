@@ -1,4 +1,4 @@
-import { PrismaClient } from '../../../generated/prisma';
+import { PrismaClient } from '../../../../generated/prisma';
 
 const prisma = new PrismaClient();
 
@@ -33,8 +33,45 @@ export default async function handler(req, res) {
   if (req.method === 'POST') {
     const { nome, email, clienteId } = req.body;
 
-    // Criar um novo destinatário
+    // Validações básicas
+    if (!nome || !email || !clienteId) {
+      return res.status(400).json({ 
+        error: 'Nome, email e clienteId são obrigatórios' 
+      });
+    }
+
+    // Validar formato do email
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      return res.status(400).json({ 
+        error: 'Formato de email inválido' 
+      });
+    }
+
     try {
+      // Verificar se o cliente existe
+      const cliente = await prisma.cliente.findUnique({
+        where: { id: parseInt(clienteId) }
+      });
+
+      if (!cliente) {
+        return res.status(400).json({ 
+          error: `Cliente com ID ${clienteId} não encontrado` 
+        });
+      }
+
+      // Verificar se já existe um destinatário com este email
+      const destinatarioExistente = await prisma.destinatario.findUnique({
+        where: { email }
+      });
+
+      if (destinatarioExistente) {
+        return res.status(400).json({ 
+          error: 'Já existe um destinatário com este email' 
+        });
+      }
+
+      // Criar um novo destinatário
       const destinatario = await prisma.destinatario.create({
         data: {
           nome,
@@ -45,9 +82,30 @@ export default async function handler(req, res) {
           cliente: true, // Incluir dados do cliente
         },
       });
-      return res.status(201).json(destinatario);
+      
+      return res.status(201).json({
+        message: 'Destinatário criado com sucesso',
+        destinatario
+      });
     } catch (error) {
-      return res.status(400).json({ errors: error.message });
+      console.error('Erro ao criar destinatário:', error);
+      
+      // Tratamento específico para diferentes tipos de erro
+      if (error.code === 'P2002') {
+        return res.status(400).json({ 
+          error: 'Já existe um destinatário com este email' 
+        });
+      }
+      
+      if (error.code === 'P2003') {
+        return res.status(400).json({ 
+          error: 'Cliente não encontrado' 
+        });
+      }
+      
+      return res.status(500).json({ 
+        error: 'Erro interno do servidor ao criar destinatário' 
+      });
     }
   }
 

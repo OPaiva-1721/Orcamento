@@ -1,4 +1,4 @@
-import { PrismaClient } from '../../../../generated/prisma';
+import { PrismaClient } from '../../../../../generated/prisma';
 import nodemailer from 'nodemailer';
 import puppeteer from 'puppeteer';
 import fs from 'fs';
@@ -313,9 +313,9 @@ async function gerarPDF(orcamento) {
   return pdfBuffer;
 }
 
-// Função para enviar email para múltiplos destinatários
-async function enviarEmailMultiplosDestinatarios(orcamento, pdfBuffer, destinatarios) {
-  const transporter = nodemailer.createTransport({
+// Função para enviar email para destinatários específicos
+async function enviarEmailParaDestinatarios(orcamento, pdfBuffer, destinatarios) {
+  const transporter = nodemailer.createTransporter({
     service: 'gmail',
     auth: {
       user: process.env.EMAIL_USER,
@@ -405,111 +405,64 @@ async function enviarEmailMultiplosDestinatarios(orcamento, pdfBuffer, destinata
 }
 
 export default async function handler(req, res) {
-  if (req.method === 'GET') {
-    // Buscar orçamentos com filtros opcionais
-    const { clienteId, destinatarioId, status } = req.query;
-    
-    let where = {};
-    
-    if (clienteId) {
-      where.clienteId = parseInt(clienteId);
-    }
-    
-    if (status) {
-      where.status = status;
-    }
-
-    // Buscar todos os orçamentos
-    const orcamentos = await prisma.orcamento.findMany({
-      where,
-      include: {
-        cliente: true,
-        orcamentoDestinatarios: {
-          include: {
-            destinatario: true
-          }
-        }
-      },
-      orderBy: {
-        dataInicio: 'desc',
-      },
-    });
-
-    // Filtrar por destinatário se especificado
-    let orcamentosFiltrados = orcamentos;
-    if (destinatarioId) {
-      orcamentosFiltrados = orcamentos.filter(orcamento => 
-        orcamento.orcamentoDestinatarios.some(od => od.destinatarioId === parseInt(destinatarioId))
-      );
-    }
-
-    return res.status(200).json(orcamentosFiltrados);
-  }
+  const { id } = req.query;
+  const orcamentoId = parseInt(id);
 
   if (req.method === 'POST') {
-    const {
-      clienteId,
-      destinatarioIds, // Agora é um array de IDs
-      descricao,
-      preco,
-      status,
-      formaPagamento,
-      dataInicio,
-      dataTermino,
-    } = req.body;
+    const { destinatarioIds } = req.body;
 
-    // Criar um novo orçamento
+    if (!destinatarioIds || !Array.isArray(destinatarioIds)) {
+      return res.status(400).json({ error: 'destinatarioIds deve ser um array' });
+    }
+
     try {
-      const orcamento = await prisma.orcamento.create({
-        data: {
-          clienteId,
-          descricao,
-          preco,
-          status,
-          formaPagamento,
-          dataInicio: new Date(dataInicio),
-          dataTermino: new Date(dataTermino),
-          orcamentoDestinatarios: {
-            create: destinatarioIds.map(destinatarioId => ({
-              destinatarioId: parseInt(destinatarioId)
-            }))
-          }
-        },
+      // Buscar o orçamento com todos os dados necessários
+      const orcamento = await prisma.orcamento.findUnique({
+        where: { id: orcamentoId },
         include: {
           cliente: true,
           orcamentoDestinatarios: {
+            where: {
+              destinatarioId: {
+                in: destinatarioIds.map(id => parseInt(id))
+              }
+            },
             include: {
               destinatario: true
             }
           }
-        },
+        }
       });
 
-      // Enviar email automaticamente para todos os destinatários
-      let emailsEnviados = [];
-      let emailError = null;
-
-      if (process.env.EMAIL_USER && process.env.EMAIL_PASS && destinatarioIds.length > 0) {
-        try {
-          const pdfBuffer = await gerarPDF(orcamento);
-          const destinatarios = orcamento.orcamentoDestinatarios.map(od => od.destinatario);
-          emailsEnviados = await enviarEmailMultiplosDestinatarios(orcamento, pdfBuffer, destinatarios);
-        } catch (emailErr) {
-          console.error('Erro ao enviar emails:', emailErr);
-          emailError = emailErr.message;
-        }
+      if (!orcamento) {
+        return res.status(404).json({ message: 'Orçamento não encontrado' });
       }
 
-      return res.status(201).json({
-        ...orcamento,
-        emailsEnviados,
-        emailError: emailError ? `Emails não enviados: ${emailError}` : null,
-        message: emailsEnviados.length > 0 
-          ? `Orçamento criado e ${emailsEnviados.filter(e => e.status === 'enviado').length} email(s) enviado(s) com sucesso!` 
-          : 'Orçamento criado com sucesso! (Emails não enviados - verifique as credenciais)'
+      if (orcamento.orcamentoDestinatarios.length === 0) {
+        return res.status(400).json({ error: 'Nenhum destinatário encontrado para os IDs fornecidos' });
+      }
+
+      // Verificar se as credenciais de email estão configuradas
+      if (!process.env.EMAIL_USER || !process.env.EMAIL_PASS) {
+        return res.status(400).json({ error: 'Credenciais de email não configuradas' });
+      }
+
+      // Gerar PDF e enviar emails
+      const pdfBuffer = await gerarPDF(orcamento);
+      const destinatarios = orcamento.orcamentoDestinatarios.map(od => od.destinatario);
+      const resultados = await enviarEmailParaDestinatarios(orcamento, pdfBuffer, destinatarios);
+
+      const emailsEnviados = resultados.filter(r => r.status === 'enviado').length;
+      const emailsComErro = resultados.filter(r => r.status === 'erro').length;
+
+      return res.status(200).json({
+        message: `${emailsEnviados} email(s) enviado(s) com sucesso${emailsComErro > 0 ? `, ${emailsComErro} com erro` : ''}`,
+        resultados
       });
+
     } catch (error) {
-      return res.status(400).json({ errors: error.message });
+      console.error('Erro ao reenviar emails:', error);
+      return res.status(500).json({ error: error.message });
     }
   }
 

@@ -1,4 +1,4 @@
-import { PrismaClient } from '../../../generated/prisma';
+import { PrismaClient } from '../../../../generated/prisma';
 
 const prisma = new PrismaClient();
 
@@ -31,8 +31,34 @@ export default async function handler(req, res) {
   if (req.method === 'POST') {
     const { nome, cnpj, email, telefone } = req.body;
 
-    // Criar um novo cliente
+    // Validações básicas
+    if (!nome || !cnpj || !email || !telefone) {
+      return res.status(400).json({ 
+        error: 'Nome, CNPJ, email e telefone são obrigatórios' 
+      });
+    }
+
+    // Validar formato do email
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      return res.status(400).json({ 
+        error: 'Formato de email inválido' 
+      });
+    }
+
     try {
+      // Verificar se já existe um cliente com este email
+      const clienteExistente = await prisma.cliente.findUnique({
+        where: { email }
+      });
+
+      if (clienteExistente) {
+        return res.status(400).json({ 
+          error: 'Já existe um cliente com este email' 
+        });
+      }
+
+      // Criar um novo cliente
       const cliente = await prisma.cliente.create({
         data: {
           nome,
@@ -41,9 +67,24 @@ export default async function handler(req, res) {
           telefone,
         },
       });
-      return res.status(201).json(cliente);
+      
+      return res.status(201).json({
+        message: 'Cliente criado com sucesso',
+        cliente
+      });
     } catch (error) {
-      return res.status(400).json({ errors: error.message });
+      console.error('Erro ao criar cliente:', error);
+      
+      // Tratamento específico para diferentes tipos de erro
+      if (error.code === 'P2002') {
+        return res.status(400).json({ 
+          error: 'Já existe um cliente com este email' 
+        });
+      }
+      
+      return res.status(500).json({ 
+        error: 'Erro interno do servidor ao criar cliente' 
+      });
     }
   }
 

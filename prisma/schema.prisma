@@ -24,7 +24,7 @@ model Destinatario {
   email       String     @unique
   clienteId   Int
   cliente     Cliente    @relation(fields: [clienteId], references: [id])
-  orcamentos  Orcamento[]
+  orcamentoDestinatarios OrcamentoDestinatario[]
 }
 
 model Orcamento {
@@ -36,7 +36,18 @@ model Orcamento {
   dataInicio      DateTime
   dataTermino     DateTime
   clienteId       Int
-  destinatarioId  Int
   cliente         Cliente   @relation(fields: [clienteId], references: [id])
-  destinatario    Destinatario @relation(fields: [destinatarioId], references: [id])
+  orcamentoDestinatarios OrcamentoDestinatario[]
+}
+
+model OrcamentoDestinatario {
+  id            Int         @id @default(autoincrement())
+  orcamentoId   Int
+  destinatarioId Int
+  emailEnviado  Boolean     @default(false)
+  dataEnvio     DateTime?
+  orcamento     Orcamento   @relation(fields: [orcamentoId], references: [id], onDelete: Cascade)
+  destinatario  Destinatario @relation(fields: [destinatarioId], references: [id], onDelete: Cascade)
+  
+  @@unique([orcamentoId, destinatarioId])
 }
