@@ -4,7 +4,7 @@ const globalForPrisma = globalThis as unknown as {
   prisma: PrismaClient | undefined;
 };
 
-// Configuração do Prisma com tratamento de erro para build
+// Configuração do Prisma otimizada para Vercel
 const prismaConfig = {
   datasources: {
     db: {
@@ -12,6 +12,12 @@ const prismaConfig = {
     }
   },
   log: process.env.NODE_ENV === 'development' ? ['query', 'error', 'warn'] as Prisma.LogLevel[] : ['error'] as Prisma.LogLevel[],
+  // Configuração para Vercel
+  __internal: {
+    engine: {
+      binaryPath: undefined,
+    },
+  },
 };
 
 export const prisma = globalForPrisma.prisma ?? new PrismaClient(prismaConfig);
