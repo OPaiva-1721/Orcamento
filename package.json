@@ -5,8 +5,7 @@
   "scripts": {
     "build": "cd orcamento && npm run build",
     "dev": "cd orcamento && npm run dev",
-    "start": "cd orcamento && npm run start",
-    "install": "cd orcamento && npm install"
+    "start": "cd orcamento && npm run start"
   },
   "workspaces": [
     "orcamento"
