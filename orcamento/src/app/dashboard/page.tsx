@@ -153,20 +153,22 @@ async function RecentOrcamentos() {
         </CardHeader>
         <CardContent>
           <div className="space-y-4">
-            {orcamentos.map((orcamento: OrcamentoWithRelations) => (
-              <div key={orcamento.id} className="flex items-center justify-between p-4 border rounded-lg">
+            {orcamentos.map((orcamento, idx) => (
+              <div key={orcamento.id ?? idx} className="flex items-center justify-between p-4 border rounded-lg">
                 <div className="space-y-1">
                   <p className="font-medium">{orcamento.descricao}</p>
                   <p className="text-sm text-gray-500">
-                    Cliente: {orcamento.cliente.nome}
+                    Cliente: {orcamento.cliente?.nome ?? 'Desconhecido'}
                   </p>
                   <p className="text-sm text-gray-500">
-                    {orcamento.destinatarios.length} destinatário(s)
+                    {orcamento.destinatarios?.length ?? 0} destinatário(s)
                   </p>
                 </div>
                 <div className="text-right space-y-1">
                   <p className="font-semibold">{formatCurrency(orcamento.preco)}</p>
-                  <p className="text-sm text-gray-500">{formatDate(orcamento.createdAt)}</p>
+                  <p className="text-sm text-gray-500">
+                    {orcamento.createdAt ? formatDate(orcamento.createdAt as Date) : ''}
+                  </p>
                 </div>
               </div>
             ))}
