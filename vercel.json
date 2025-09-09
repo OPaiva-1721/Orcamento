@@ -3,7 +3,7 @@
   "devCommand": "cd orcamento && npm run dev",
   "installCommand": "cd orcamento && npm install",
   "functions": {
-    "orcamento/src/app/api/**/*.ts": {
+    "src/app/api/**/*.ts": {
       "maxDuration": 30
     }
   }
