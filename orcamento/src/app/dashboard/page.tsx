@@ -19,6 +19,7 @@ interface OrcamentoWithRelations {
   descricao: string;
   preco: number;
   status: string;
+  createdAt: Date;
   cliente: {
     id: number;
     nome: string;
