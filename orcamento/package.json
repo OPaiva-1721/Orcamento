@@ -14,7 +14,8 @@
     "db:studio": "prisma studio",
     "db:reset": "prisma migrate reset",
     "db:status": "prisma migrate status",
-    "migrate:supabase": "node migrate-to-supabase.js"
+    "migrate:supabase": "node migrate-to-supabase.js",
+    "ngrok": "ngrok http 3000 --host-header=localhost:3000"
   },
   "dependencies": {
     "@prisma/client": "^6.15.0",
