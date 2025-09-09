@@ -53,9 +53,9 @@ interface Orcamento {
 }
 
 interface RouteParams {
-  params: {
+  params: Promise<{
     id: string;
-  };
+  }>;
 }
 
 export default function EditarOrcamentoPage({ params }: RouteParams) {
