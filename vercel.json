@@ -1,6 +1,3 @@
 {
-  "buildCommand": "cd orcamento && npm run build",
-  "devCommand": "cd orcamento && npm run dev",
-  "installCommand": "cd orcamento && npm install",
-  "outputDirectory": "orcamento/.next"
+  "framework": "nextjs"
 }
