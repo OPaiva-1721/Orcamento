@@ -153,7 +153,7 @@ async function RecentOrcamentos() {
         </CardHeader>
         <CardContent>
           <div className="space-y-4">
-            {orcamentos.map((orcamento, idx) => (
+            {orcamentos.map((orcamento: OrcamentoWithRelations, idx: number) => (
               <div key={orcamento.id ?? idx} className="flex items-center justify-between p-4 border rounded-lg">
                 <div className="space-y-1">
                   <p className="font-medium">{orcamento.descricao}</p>
