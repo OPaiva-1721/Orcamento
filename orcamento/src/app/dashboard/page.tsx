@@ -14,6 +14,21 @@ import {
   Eye
 } from 'lucide-react';
 
+interface OrcamentoWithRelations {
+  id: number;
+  descricao: string;
+  preco: number;
+  status: string;
+  cliente: {
+    id: number;
+    nome: string;
+  };
+  destinatarios: {
+    id: number;
+    nome: string;
+  }[];
+}
+
 // Componente para estatísticas
 async function StatsCards() {
   try {
@@ -138,7 +153,7 @@ async function RecentOrcamentos() {
         </CardHeader>
         <CardContent>
           <div className="space-y-4">
-            {orcamentos.map((orcamento) => (
+            {orcamentos.map((orcamento: OrcamentoWithRelations) => (
               <div key={orcamento.id} className="flex items-center justify-between p-4 border rounded-lg">
                 <div className="space-y-1">
                   <p className="font-medium">{orcamento.descricao}</p>
