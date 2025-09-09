@@ -1,3 +1,10 @@
 {
-  "framework": "nextjs"
+  "buildCommand": "cd orcamento && npm run build",
+  "installCommand": "cd orcamento && npm install",
+  "framework": "nextjs",
+  "functions": {
+    "src/app/api/**/*.ts": {
+      "maxDuration": 30
+    }
+  }
 }

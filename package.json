@@ -19,6 +19,9 @@
     "migrate:supabase": "node migrate-to-supabase.js",
     "ngrok": "ngrok http 3000 --host-header=localhost:3000"
   },
+  "prisma": {
+    "schema": "prisma/schema.prisma"
+  },
   "dependencies": {
     "@prisma/client": "^6.15.0",
     "next": "^15.1.0",
