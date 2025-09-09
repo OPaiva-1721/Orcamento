@@ -30,7 +30,7 @@ function Badge({ className, variant = "default", ...props }: BadgeProps) {
 
 // Componente específico para status de orçamento
 export function StatusBadge({ status }: { status: string }) {
-  const getVariant = (status: string): BadgeProps["variant"] => {
+  const getVariant = (status: string): "default" | "secondary" | "destructive" | "outline" | "success" | "warning" => {
     switch (status.toLowerCase()) {
       case "aprovado":
       case "concluído":

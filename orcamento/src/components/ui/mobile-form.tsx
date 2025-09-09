@@ -1,8 +1,8 @@
 'use client';
 
 import { ReactNode } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from './card';
-import { Button } from './button';
+import { Card, CardContent, CardHeader, CardTitle } from './Card';
+import { Button } from './Button';
 import { cn } from '@/lib/utils';
 
 interface MobileFormProps {

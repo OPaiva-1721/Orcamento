@@ -16,8 +16,17 @@ interface Cliente {
   telefone: string;
   cnpj: string;
   createdAt: string;
-  destinatarios: any[];
-  orcamentos: any[];
+  destinatarios: {
+    id: number;
+    nome: string;
+    email: string;
+  }[];
+  orcamentos: {
+    id: number;
+    descricao: string;
+    preco: number;
+    status: string;
+  }[];
 }
 
 // Componente para listar clientes
@@ -112,7 +121,7 @@ function ClientesList() {
       {
         key: 'destinatarios' as keyof typeof clientes[0],
         label: 'Destinatários',
-        render: (value: any[]) => (
+        render: (value: Cliente['destinatarios']) => (
           <span className="text-sm text-gray-600">
             {value.length} destinatário(s)
           </span>
@@ -122,7 +131,7 @@ function ClientesList() {
       {
         key: 'orcamentos' as keyof typeof clientes[0],
         label: 'Orçamentos',
-        render: (value: any[]) => (
+        render: (value: Cliente['orcamentos']) => (
           <span className="text-sm text-gray-600">
             {value.length} orçamento(s)
           </span>

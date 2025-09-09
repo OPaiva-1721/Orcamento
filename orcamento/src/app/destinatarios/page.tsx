@@ -7,6 +7,24 @@ import { prisma } from '@/lib/prisma';
 import Link from 'next/link';
 import { Plus, Mail, Users, Building, FileText, Edit, ArrowLeft } from 'lucide-react';
 
+interface DestinatarioWithRelations {
+  id: number;
+  nome: string;
+  email: string;
+  createdAt: Date;
+  cliente: {
+    id: number;
+    nome: string;
+    email: string;
+  };
+  orcamentos: {
+    id: number;
+    descricao: string;
+    preco: number;
+    status: string;
+  }[];
+}
+
 // Componente para listar destinatários
 async function DestinatariosList() {
   try {
@@ -57,7 +75,7 @@ async function DestinatariosList() {
 
     return (
       <div className="space-y-4">
-        {destinatarios.map((destinatario) => (
+        {destinatarios.map((destinatario: DestinatarioWithRelations) => (
           <Card key={destinatario.id}>
             <CardContent className="p-6">
               <div className="flex items-start justify-between">

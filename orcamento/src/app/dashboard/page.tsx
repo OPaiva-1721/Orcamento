@@ -21,11 +21,9 @@ interface OrcamentoWithRelations {
   status: string;
   createdAt: Date;
   cliente: {
-    id: number;
     nome: string;
   };
   destinatarios: {
-    id: number;
     nome: string;
   }[];
 }
