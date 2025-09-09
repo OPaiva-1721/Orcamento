@@ -1,0 +1,14 @@
+{
+  "name": "orcamento-root",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "build": "cd orcamento && npm run build",
+    "dev": "cd orcamento && npm run dev",
+    "start": "cd orcamento && npm run start",
+    "install": "cd orcamento && npm install"
+  },
+  "workspaces": [
+    "orcamento"
+  ]
+}
