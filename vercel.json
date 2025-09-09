@@ -2,5 +2,11 @@
   "buildCommand": "cd orcamento && npm run build",
   "devCommand": "cd orcamento && npm run dev",
   "installCommand": "cd orcamento && npm install",
-  "outputDirectory": "orcamento/.next"
+  "outputDirectory": "orcamento/.next",
+  "framework": "nextjs",
+  "functions": {
+    "orcamento/src/app/api/**/*.ts": {
+      "maxDuration": 30
+    }
+  }
 }
