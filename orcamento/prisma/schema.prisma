@@ -1,3 +1,6 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
 generator client {
   provider = "prisma-client-js"
 }
@@ -8,7 +11,7 @@ datasource db {
 }
 
 model Cliente {
-  id            Int             @id @default(autoincrement())
+  id            Int             @id @default(autoincrement)
   nome          String
   cnpj          String
   email         String          @unique
@@ -20,7 +23,7 @@ model Cliente {
 }
 
 model Destinatario {
-  id            Int             @id @default(autoincrement())
+  id            Int             @id @default(autoincrement)
   nome          String
   email         String
   clienteId     Int
@@ -34,7 +37,7 @@ model Destinatario {
 }
 
 model Orcamento {
-  id              Int             @id @default(autoincrement())
+  id              Int             @id @default(autoincrement)
   descricao       String
   preco           Float
   status          String          @default("Pendente")
@@ -51,7 +54,7 @@ model Orcamento {
 }
 
 model EmailEnviado {
-  id              Int             @id @default(autoincrement())
+  id              Int             @id @default(autoincrement)
   orcamentoId     Int
   destinatarioId  Int
   dataEnvio       DateTime        @default(now())
@@ -63,7 +66,7 @@ model EmailEnviado {
 }
 
 model StatusHistory {
-  id          Int       @id @default(autoincrement())
+  id          Int       @id @default(autoincrement)
   orcamentoId Int
   status      String
   dataMudanca DateTime  @default(now())
