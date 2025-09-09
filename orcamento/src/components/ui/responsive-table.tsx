@@ -2,9 +2,9 @@
 
 import { ReactNode } from 'react';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from './table';
-import { Card, CardContent } from './card';
+import { Card, CardContent } from './Card';
 import { Badge } from './badge';
-import { Button } from './button';
+import { Button } from './Button';
 import { cn } from '@/lib/utils';
 
 interface Column<T> {
