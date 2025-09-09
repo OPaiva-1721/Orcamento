@@ -20,6 +20,9 @@ const prismaConfig = {
   },
 };
 
-export const prisma = globalForPrisma.prisma ?? new PrismaClient(prismaConfig);
+export const prisma = globalForPrisma.prisma ?? new PrismaClient({
+  datasources: prismaConfig.datasources,
+  log: prismaConfig.log,
+});
 
 if (process.env.NODE_ENV !== 'production') globalForPrisma.prisma = prisma;
