@@ -2,9 +2,9 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/Button';
+import { Input } from '@/components/ui/Input';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/Card';
 import { ArrowLeft, Save, User, Mail } from 'lucide-react';
 import Link from 'next/link';
 import { isValidEmail } from '@/lib/utils';
@@ -32,9 +32,9 @@ interface Orcamento {
 }
 
 interface RouteParams {
-  params: {
+  params: Promise<{
     id: string;
-  };
+  }>;
 }
 
 export default function EditarDestinatarioPage({ params }: RouteParams) {
@@ -42,6 +42,7 @@ export default function EditarDestinatarioPage({ params }: RouteParams) {
   const [loading, setLoading] = useState(false);
   const [destinatario, setDestinatario] = useState<Destinatario | null>(null);
   const [clientes, setClientes] = useState<Cliente[]>([]);
+  const [resolvedParams, setResolvedParams] = useState<{ id: string } | null>(null);
   const [formData, setFormData] = useState({
     nome: '',
     email: '',
@@ -49,13 +50,25 @@ export default function EditarDestinatarioPage({ params }: RouteParams) {
   });
 
   useEffect(() => {
-    carregarDestinatario();
-    carregarClientes();
-  }, [params.id]);
+    const resolveParams = async () => {
+      const resolved = await params;
+      setResolvedParams(resolved);
+    };
+    resolveParams();
+  }, [params]);
+
+  useEffect(() => {
+    if (resolvedParams) {
+      carregarDestinatario();
+      carregarClientes();
+    }
+  }, [resolvedParams]);
 
   const carregarDestinatario = async () => {
+    if (!resolvedParams) return;
+    
     try {
-      const response = await fetch(`/api/destinatarios/${params.id}`);
+      const response = await fetch(`/api/destinatarios/${resolvedParams.id}`);
       const data = await response.json();
       
       if (data.success) {
@@ -90,10 +103,12 @@ export default function EditarDestinatarioPage({ params }: RouteParams) {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!resolvedParams) return;
+    
     setLoading(true);
 
     try {
-      const response = await fetch(`/api/destinatarios/${params.id}`, {
+      const response = await fetch(`/api/destinatarios/${resolvedParams.id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

@@ -33,15 +33,16 @@ interface Orcamento {
 }
 
 interface RouteParams {
-  params: {
+  params: Promise<{
     id: string;
-  };
+  }>;
 }
 
 export default function EditarClientePage({ params }: RouteParams) {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [cliente, setCliente] = useState<Cliente | null>(null);
+  const [resolvedParams, setResolvedParams] = useState<{ id: string } | null>(null);
   const [formData, setFormData] = useState({
     nome: '',
     cnpj: '',
@@ -50,12 +51,24 @@ export default function EditarClientePage({ params }: RouteParams) {
   });
 
   useEffect(() => {
-    carregarCliente();
-  }, [params.id]);
+    const resolveParams = async () => {
+      const resolved = await params;
+      setResolvedParams(resolved);
+    };
+    resolveParams();
+  }, [params]);
+
+  useEffect(() => {
+    if (resolvedParams) {
+      carregarCliente();
+    }
+  }, [resolvedParams]);
 
   const carregarCliente = async () => {
+    if (!resolvedParams) return;
+    
     try {
-      const response = await fetch(`/api/clientes/${params.id}`);
+      const response = await fetch(`/api/clientes/${resolvedParams.id}`);
       const data = await response.json();
       
       if (data.success) {
@@ -78,10 +91,12 @@ export default function EditarClientePage({ params }: RouteParams) {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!resolvedParams) return;
+    
     setLoading(true);
 
     try {
-      const response = await fetch(`/api/clientes/${params.id}`, {
+      const response = await fetch(`/api/clientes/${resolvedParams.id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

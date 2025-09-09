@@ -4,9 +4,9 @@ import { UpdateDestinatarioData } from '@/types';
 import { isValidEmail } from '@/lib/utils';
 
 interface RouteParams {
-  params: {
+  params: Promise<{
     id: string;
-  };
+  }>;
 }
 
 // GET /api/destinatarios/[id] - Buscar destinatário por ID

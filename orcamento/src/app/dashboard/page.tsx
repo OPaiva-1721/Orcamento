@@ -1,6 +1,6 @@
 import { Suspense } from 'react';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/Card';
+import { Button } from '@/components/ui/Button';
 import { LoadingCard, TableSkeleton } from '@/components/ui/loading';
 import { formatCurrency, formatDate } from '@/lib/utils';
 import { prisma } from '@/lib/prisma';

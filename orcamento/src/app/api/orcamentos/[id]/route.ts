@@ -3,9 +3,9 @@ import { prisma } from '@/lib/prisma';
 import { UpdateOrcamentoData } from '@/types';
 
 interface RouteParams {
-  params: {
+  params: Promise<{
     id: string;
-  };
+  }>;
 }
 
 // GET /api/orcamentos/[id] - Buscar orçamento por ID

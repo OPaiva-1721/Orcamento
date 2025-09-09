@@ -4,9 +4,9 @@ import { UpdateClienteData } from '@/types';
 import { isValidEmail, isValidCNPJ } from '@/lib/utils';
 
 interface RouteParams {
-  params: {
+  params: Promise<{
     id: string;
-  };
+  }>;
 }
 
 // GET /api/clientes/[id] - Buscar cliente por ID
