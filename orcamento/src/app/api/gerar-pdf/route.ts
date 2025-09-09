@@ -30,7 +30,7 @@ export async function POST(request: NextRequest) {
 
     const pdfBuffer = await gerarPDFOrcamento(orcamento);
 
-    return new NextResponse(pdfBuffer, {
+    return new NextResponse(new Uint8Array(pdfBuffer), {
       headers: {
         'Content-Type': 'application/pdf',
         'Content-Disposition': `attachment; filename="orcamento_aguia_${orcamento.id}.pdf"`,
