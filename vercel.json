@@ -7,7 +7,4 @@
       "maxDuration": 30
     }
   },
-  "env": {
-    "PRISMA_QUERY_ENGINE_BINARY": "node_modules/.prisma/client/query-engine-linux-x86_64"
-  }
 }
