@@ -125,6 +125,12 @@ type RouteHandlerConfig<Route extends AppRouteHandlerRoutes = AppRouteHandlerRou
   handler satisfies RouteHandlerConfig<"/api/clientes">
 }
 
+// Validate ../../src/app/api/debug/route.ts
+{
+  const handler = {} as typeof import("../../src/app/api/debug/route.js")
+  handler satisfies RouteHandlerConfig<"/api/debug">
+}
+
 // Validate ../../src/app/api/destinatarios/[id]/route.ts
 {
   const handler = {} as typeof import("../../src/app/api/destinatarios/[id]/route.js")
@@ -155,6 +161,12 @@ type RouteHandlerConfig<Route extends AppRouteHandlerRoutes = AppRouteHandlerRou
   handler satisfies RouteHandlerConfig<"/api/gerar-pdf">
 }
 
+// Validate ../../src/app/api/migrate/route.ts
+{
+  const handler = {} as typeof import("../../src/app/api/migrate/route.js")
+  handler satisfies RouteHandlerConfig<"/api/migrate">
+}
+
 // Validate ../../src/app/api/orcamentos/[id]/destinatarios/route.ts
 {
   const handler = {} as typeof import("../../src/app/api/orcamentos/[id]/destinatarios/route.js")
@@ -171,6 +183,18 @@ type RouteHandlerConfig<Route extends AppRouteHandlerRoutes = AppRouteHandlerRou
 {
   const handler = {} as typeof import("../../src/app/api/orcamentos/route.js")
   handler satisfies RouteHandlerConfig<"/api/orcamentos">
+}
+
+// Validate ../../src/app/api/test-db/route.ts
+{
+  const handler = {} as typeof import("../../src/app/api/test-db/route.js")
+  handler satisfies RouteHandlerConfig<"/api/test-db">
+}
+
+// Validate ../../src/app/api/test/route.ts
+{
+  const handler = {} as typeof import("../../src/app/api/test/route.js")
+  handler satisfies RouteHandlerConfig<"/api/test">
 }
 
 
