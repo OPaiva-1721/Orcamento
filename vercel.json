@@ -8,7 +8,6 @@
     }
   },
   "env": {
-    "DATABASE_URL": "postgresql://postgres:Am@billy10@db.xxxxxxxxxxxxx.supabase.co:5432/postgres",
-    "ACCELERATE_URL": "[sua-url-do-accelerate]"
+    "DATABASE_URL": "postgresql://postgres:Am@billy10@db.xxxxxxxxxxxxx.supabase.co:5432/postgres"
   }
 }
