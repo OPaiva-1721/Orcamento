@@ -2,15 +2,19 @@ import { PrismaClient } from '@prisma/client';
 
 // Versão alternativa do Prisma Client para testar diferentes configurações
 const createPrismaClient = (url?: string) => {
-  const client = new PrismaClient({
-    datasources: url ? {
+  const options: any = {
+    log: process.env.NODE_ENV === 'development' ? ['query', 'error', 'warn'] : ['error'],
+  };
+  
+  if (url) {
+    options.datasources = {
       db: {
         url: url
       }
-    } : undefined,
-    log: process.env.NODE_ENV === 'development' ? ['query', 'error', 'warn'] : ['error'],
-  });
+    };
+  }
   
+  const client = new PrismaClient(options);
   return client;
 };
 
