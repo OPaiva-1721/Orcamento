@@ -8,6 +8,7 @@
     }
   },
   "env": {
-    "DATABASE_URL": "postgresql://postgres:Am@billy10@db.xxxxxxxxxxxxx.supabase.co:5432/postgres"
+    "DATABASE_URL": "postgresql://postgres:Am@billy10@db.xxxxxxxxxxxxx.supabase.co:5432/postgres",
+    "PRISMA_QUERY_ENGINE_BINARY": "node_modules/.prisma/client/query-engine-linux-x86_64"
   }
 }
