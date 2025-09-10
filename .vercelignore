@@ -1,1 +1,4 @@
-orcamento/
+# Force clean build
+.next
+node_modules/.prisma
+*.log
