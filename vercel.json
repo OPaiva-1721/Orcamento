@@ -8,11 +8,7 @@
     }
   },
   "env": {
-    "DATABASE_URL": "@database_url"
-  },
-  "build": {
-    "env": {
-      "PRISMA_GENERATE_SKIP_AUTOINSTALL": "true"
-    }
+    "DATABASE_URL": "@database_url",
+    "ACCELERATE_URL": "@accelerate_url"
   }
 }
