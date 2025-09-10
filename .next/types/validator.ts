@@ -125,6 +125,18 @@ type RouteHandlerConfig<Route extends AppRouteHandlerRoutes = AppRouteHandlerRou
   handler satisfies RouteHandlerConfig<"/api/clientes">
 }
 
+// Validate ../../src/app/api/debug-env/route.ts
+{
+  const handler = {} as typeof import("../../src/app/api/debug-env/route.js")
+  handler satisfies RouteHandlerConfig<"/api/debug-env">
+}
+
+// Validate ../../src/app/api/debug-full/route.ts
+{
+  const handler = {} as typeof import("../../src/app/api/debug-full/route.js")
+  handler satisfies RouteHandlerConfig<"/api/debug-full">
+}
+
 // Validate ../../src/app/api/debug/route.ts
 {
   const handler = {} as typeof import("../../src/app/api/debug/route.js")
@@ -185,10 +197,28 @@ type RouteHandlerConfig<Route extends AppRouteHandlerRoutes = AppRouteHandlerRou
   handler satisfies RouteHandlerConfig<"/api/orcamentos">
 }
 
+// Validate ../../src/app/api/test-all-configs/route.ts
+{
+  const handler = {} as typeof import("../../src/app/api/test-all-configs/route.js")
+  handler satisfies RouteHandlerConfig<"/api/test-all-configs">
+}
+
+// Validate ../../src/app/api/test-connection/route.ts
+{
+  const handler = {} as typeof import("../../src/app/api/test-connection/route.js")
+  handler satisfies RouteHandlerConfig<"/api/test-connection">
+}
+
 // Validate ../../src/app/api/test-db/route.ts
 {
   const handler = {} as typeof import("../../src/app/api/test-db/route.js")
   handler satisfies RouteHandlerConfig<"/api/test-db">
+}
+
+// Validate ../../src/app/api/test-supabase/route.ts
+{
+  const handler = {} as typeof import("../../src/app/api/test-supabase/route.js")
+  handler satisfies RouteHandlerConfig<"/api/test-supabase">
 }
 
 // Validate ../../src/app/api/test/route.ts
