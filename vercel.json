@@ -9,5 +9,10 @@
   },
   "env": {
     "DATABASE_URL": "@database_url"
+  },
+  "build": {
+    "env": {
+      "PRISMA_GENERATE_DATAPROXY": "true"
+    }
   }
 }
