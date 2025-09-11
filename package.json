@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "rm -rf node_modules/.prisma && prisma generate && next build",
+    "build": "prisma generate && next build",
     "start": "next start",
     "lint": "next lint",
     "postinstall": "prisma generate",
@@ -16,7 +16,8 @@
     "db:reset": "prisma migrate reset",
     "db:status": "prisma migrate status",
     "migrate:supabase": "node migrate-to-supabase.js",
-    "ngrok": "ngrok http 3000 --host-header=localhost:3000"
+    "ngrok": "ngrok http 3000 --host-header=localhost:3000",
+    "vercel-build": "prisma migrate deploy && prisma generate && next build"
   },
   "prisma": {
     "schema": "prisma/schema.prisma"
