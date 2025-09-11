@@ -23,7 +23,7 @@
     "schema": "prisma/schema.prisma"
   },
   "dependencies": {
-    "@prisma/client": "^6.15.0",
+    "@prisma/client": "^6.16.1",
     "@supabase/supabase-js": "^2.57.4",
     "clsx": "^2.1.1",
     "lucide-react": "^0.468.0",
@@ -43,7 +43,7 @@
     "@types/react-dom": "^18.3.5",
     "eslint": "^9.17.0",
     "eslint-config-next": "^15.1.0",
-    "prisma": "^6.15.0",
+    "prisma": "^6.16.1",
     "tailwindcss": "^4",
     "typescript": "^5.7.2"
   }
