@@ -5,7 +5,7 @@ type AppRoutes = "/" | "/clientes" | "/clientes/[id]" | "/clientes/novo" | "/das
 type AppRouteHandlerRoutes = "/api/clientes" | "/api/clientes/[id]" | "/api/debug" | "/api/debug-env" | "/api/debug-full" | "/api/destinatarios" | "/api/destinatarios/[id]" | "/api/enviar-email" | "/api/gerar-pdf" | "/api/gerar-pdf-editavel-simples" | "/api/migrate" | "/api/orcamentos" | "/api/orcamentos/[id]" | "/api/orcamentos/[id]/destinatarios" | "/api/test" | "/api/test-all-configs" | "/api/test-connection" | "/api/test-db" | "/api/test-supabase"
 type PageRoutes = never
 type LayoutRoutes = "/" | "/dashboard"
-type RedirectRoutes = "/"
+type RedirectRoutes = never
 type RewriteRoutes = never
 type Routes = AppRoutes | PageRoutes | LayoutRoutes | RedirectRoutes | RewriteRoutes | AppRouteHandlerRoutes
 
