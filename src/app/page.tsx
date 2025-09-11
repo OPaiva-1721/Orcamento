@@ -1,8 +1,8 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import supabase from '../utils/supabase';
-import NewTodo from '../components/NewTodo';
+import supabase from '../../utils/supabase';
+import NewTodo from '../../components/NewTodo';
 
 export default function Home() {
   const [todos, setTodos] = useState([]);
