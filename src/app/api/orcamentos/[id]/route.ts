@@ -74,10 +74,10 @@ export async function PUT(request: NextRequest, { params }: RouteParams) {
       status, 
       formaPagamento, 
       dataInicio, 
-      dataTermino, 
       clienteId, 
       destinatarioIds 
     } = body;
+    let { dataTermino } = body;
 
     // Verificar se o orçamento existe
     const orcamentoExistente = await prisma.orcamento.findUnique({
@@ -113,16 +113,16 @@ export async function PUT(request: NextRequest, { params }: RouteParams) {
       finalStatus = 'Aprovado'; // Concluído = Aprovado automaticamente
     }
 
+    // Tratar dataTermino vazia como null
+    if (!dataTermino || dataTermino.toString() === '') {
+        dataTermino = new Date("--/--/----");
+    }
+
     if (dataInicio && dataTermino && new Date(dataInicio) >= new Date(dataTermino)) {
       return NextResponse.json(
         { success: false, error: 'Data de início deve ser anterior à data de término' },
         { status: 400 }
       );
-    }
-
-    // Tratar dataTermino vazia como null
-    if (dataTermino === '') {
-      dataTermino = null;
     }
 
     // Verificar se o cliente existe (se clienteId estiver sendo atualizado)

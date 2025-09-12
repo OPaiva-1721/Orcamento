@@ -134,7 +134,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Tratar dataTermino vazia como null
-    if (dataTermino === '') {
+    if (!dataTermino || dataTermino === '' || dataTermino === '--/--/----') {
       dataTermino = null;
     }
 
@@ -221,7 +221,11 @@ export async function POST(request: NextRequest) {
     let emailResult = null;
     if (destinatarioIds && destinatarioIds.length > 0) {
       try {
-        console.log('Tentando enviar emails automaticamente para:', destinatarioIds);
+        console.log('=== ENVIO AUTOMÁTICO DE EMAIL ===');
+        console.log('Orçamento ID:', orcamento.id);
+        console.log('Destinatários:', destinatarioIds);
+        console.log('NEXTAUTH_URL:', process.env.NEXTAUTH_URL);
+        console.log('SMTP configurado:', !!process.env.SMTP_HOST);
         
         const emailResponse = await fetch(`${process.env.NEXTAUTH_URL || 'http://localhost:3000'}/api/enviar-email`, {
           method: 'POST',
@@ -234,17 +238,21 @@ export async function POST(request: NextRequest) {
           }),
         });
 
+        console.log('Status da resposta:', emailResponse.status);
+        
         if (emailResponse.ok) {
           emailResult = await emailResponse.json();
-          console.log('Emails enviados com sucesso:', emailResult);
+          console.log('✅ Emails enviados com sucesso:', emailResult);
         } else {
           const errorData = await emailResponse.json();
-          console.error('Erro ao enviar emails:', errorData);
+          console.error('❌ Erro ao enviar emails:', errorData);
         }
       } catch (error) {
-        console.error('Erro ao enviar emails automaticamente:', error);
+        console.error('❌ Erro ao enviar emails automaticamente:', error);
         // Não falha a criação do orçamento se o email falhar
       }
+    } else {
+      console.log('ℹ️ Nenhum destinatário selecionado para envio automático');
     }
 
     return NextResponse.json(
