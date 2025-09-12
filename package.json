@@ -17,7 +17,7 @@
     "db:status": "prisma migrate status",
     "migrate:supabase": "node migrate-to-supabase.js",
     "ngrok": "ngrok http 3000 --host-header=localhost:3000",
-    "vercel-build": "prisma migrate deploy && prisma generate && next build"
+    "vercel-build": "prisma generate && next build"
   },
   "prisma": {
     "schema": "prisma/schema.prisma"

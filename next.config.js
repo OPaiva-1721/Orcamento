@@ -11,6 +11,9 @@ const nextConfig = {
     ignoreBuildErrors: true,
   },
   
+  // Configurações específicas para Vercel
+  output: 'standalone',
+  
   // Configurações de performance
   compress: true,
   poweredByHeader: false,

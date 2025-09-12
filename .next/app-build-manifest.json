@@ -58,19 +58,19 @@
       "static/chunks/main-app-673797a520373823.js",
       "static/chunks/app/api/gerar-pdf-editavel-simples/route-1da2476c12dcc9fc.js"
     ],
-    "/api/gerar-pdf/route": [
-      "static/chunks/webpack-5a0afe3c5f60ed4b.js",
-      "static/chunks/4bd1b696-c023c6e3521b1417.js",
-      "static/chunks/255-e3bf15caf1f1e0f9.js",
-      "static/chunks/main-app-673797a520373823.js",
-      "static/chunks/app/api/gerar-pdf/route-1da2476c12dcc9fc.js"
-    ],
     "/api/enviar-email/route": [
       "static/chunks/webpack-5a0afe3c5f60ed4b.js",
       "static/chunks/4bd1b696-c023c6e3521b1417.js",
       "static/chunks/255-e3bf15caf1f1e0f9.js",
       "static/chunks/main-app-673797a520373823.js",
       "static/chunks/app/api/enviar-email/route-1da2476c12dcc9fc.js"
+    ],
+    "/api/gerar-pdf/route": [
+      "static/chunks/webpack-5a0afe3c5f60ed4b.js",
+      "static/chunks/4bd1b696-c023c6e3521b1417.js",
+      "static/chunks/255-e3bf15caf1f1e0f9.js",
+      "static/chunks/main-app-673797a520373823.js",
+      "static/chunks/app/api/gerar-pdf/route-1da2476c12dcc9fc.js"
     ],
     "/api/orcamentos/[id]/destinatarios/route": [
       "static/chunks/webpack-5a0afe3c5f60ed4b.js",
@@ -93,14 +93,15 @@
       "static/chunks/main-app-673797a520373823.js",
       "static/chunks/app/api/orcamentos/route-1da2476c12dcc9fc.js"
     ],
-    "/clientes/[id]/page": [
+    "/clientes/page": [
       "static/chunks/webpack-5a0afe3c5f60ed4b.js",
       "static/chunks/4bd1b696-c023c6e3521b1417.js",
       "static/chunks/255-e3bf15caf1f1e0f9.js",
       "static/chunks/main-app-673797a520373823.js",
       "static/chunks/909-29a533877ca43697.js",
       "static/chunks/619-ba102abea3e3d0e4.js",
-      "static/chunks/app/clientes/[id]/page-0b8e514631e39311.js"
+      "static/chunks/742-0bcd12a2f174459b.js",
+      "static/chunks/app/clientes/page-cfc6362e59f3215a.js"
     ],
     "/clientes/novo/page": [
       "static/chunks/webpack-5a0afe3c5f60ed4b.js",
@@ -111,15 +112,14 @@
       "static/chunks/619-ba102abea3e3d0e4.js",
       "static/chunks/app/clientes/novo/page-a75143715791a8fd.js"
     ],
-    "/clientes/page": [
+    "/clientes/[id]/page": [
       "static/chunks/webpack-5a0afe3c5f60ed4b.js",
       "static/chunks/4bd1b696-c023c6e3521b1417.js",
       "static/chunks/255-e3bf15caf1f1e0f9.js",
       "static/chunks/main-app-673797a520373823.js",
       "static/chunks/909-29a533877ca43697.js",
       "static/chunks/619-ba102abea3e3d0e4.js",
-      "static/chunks/742-0bcd12a2f174459b.js",
-      "static/chunks/app/clientes/page-cfc6362e59f3215a.js"
+      "static/chunks/app/clientes/[id]/page-0b8e514631e39311.js"
     ],
     "/destinatarios/[id]/page": [
       "static/chunks/webpack-5a0afe3c5f60ed4b.js",
@@ -139,6 +139,14 @@
       "static/chunks/619-ba102abea3e3d0e4.js",
       "static/chunks/app/destinatarios/novo/page-1b23463d2608c1cd.js"
     ],
+    "/destinatarios/page": [
+      "static/chunks/webpack-5a0afe3c5f60ed4b.js",
+      "static/chunks/4bd1b696-c023c6e3521b1417.js",
+      "static/chunks/255-e3bf15caf1f1e0f9.js",
+      "static/chunks/main-app-673797a520373823.js",
+      "static/chunks/619-ba102abea3e3d0e4.js",
+      "static/chunks/app/destinatarios/page-75d563d25665b682.js"
+    ],
     "/orcamentos/[id]/page": [
       "static/chunks/webpack-5a0afe3c5f60ed4b.js",
       "static/chunks/4bd1b696-c023c6e3521b1417.js",
@@ -147,14 +155,6 @@
       "static/chunks/909-29a533877ca43697.js",
       "static/chunks/619-ba102abea3e3d0e4.js",
       "static/chunks/app/orcamentos/[id]/page-c42f00ad38d8ca6d.js"
-    ],
-    "/destinatarios/page": [
-      "static/chunks/webpack-5a0afe3c5f60ed4b.js",
-      "static/chunks/4bd1b696-c023c6e3521b1417.js",
-      "static/chunks/255-e3bf15caf1f1e0f9.js",
-      "static/chunks/main-app-673797a520373823.js",
-      "static/chunks/619-ba102abea3e3d0e4.js",
-      "static/chunks/app/destinatarios/page-75d563d25665b682.js"
     ],
     "/orcamentos/novo/page": [
       "static/chunks/webpack-5a0afe3c5f60ed4b.js",
