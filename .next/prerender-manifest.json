@@ -55,54 +55,6 @@
         "x-next-revalidate-tag-token"
       ]
     },
-    "/clientes/novo": {
-      "experimentalBypassFor": [
-        {
-          "type": "header",
-          "key": "next-action"
-        },
-        {
-          "type": "header",
-          "key": "content-type",
-          "value": "multipart/form-data;.*"
-        }
-      ],
-      "initialRevalidateSeconds": false,
-      "srcRoute": "/clientes/novo",
-      "dataRoute": "/clientes/novo.rsc",
-      "allowHeader": [
-        "host",
-        "x-matched-path",
-        "x-prerender-revalidate",
-        "x-prerender-revalidate-if-generated",
-        "x-next-revalidated-tags",
-        "x-next-revalidate-tag-token"
-      ]
-    },
-    "/destinatarios": {
-      "experimentalBypassFor": [
-        {
-          "type": "header",
-          "key": "next-action"
-        },
-        {
-          "type": "header",
-          "key": "content-type",
-          "value": "multipart/form-data;.*"
-        }
-      ],
-      "initialRevalidateSeconds": false,
-      "srcRoute": "/destinatarios",
-      "dataRoute": "/destinatarios.rsc",
-      "allowHeader": [
-        "host",
-        "x-matched-path",
-        "x-prerender-revalidate",
-        "x-prerender-revalidate-if-generated",
-        "x-next-revalidated-tags",
-        "x-next-revalidate-tag-token"
-      ]
-    },
     "/clientes": {
       "experimentalBypassFor": [
         {
@@ -151,6 +103,30 @@
         "x-next-revalidate-tag-token"
       ]
     },
+    "/destinatarios": {
+      "experimentalBypassFor": [
+        {
+          "type": "header",
+          "key": "next-action"
+        },
+        {
+          "type": "header",
+          "key": "content-type",
+          "value": "multipart/form-data;.*"
+        }
+      ],
+      "initialRevalidateSeconds": false,
+      "srcRoute": "/destinatarios",
+      "dataRoute": "/destinatarios.rsc",
+      "allowHeader": [
+        "host",
+        "x-matched-path",
+        "x-prerender-revalidate",
+        "x-prerender-revalidate-if-generated",
+        "x-next-revalidated-tags",
+        "x-next-revalidate-tag-token"
+      ]
+    },
     "/orcamentos": {
       "experimentalBypassFor": [
         {
@@ -175,7 +151,7 @@
         "x-next-revalidate-tag-token"
       ]
     },
-    "/destinatarios/novo": {
+    "/clientes/novo": {
       "experimentalBypassFor": [
         {
           "type": "header",
@@ -188,8 +164,8 @@
         }
       ],
       "initialRevalidateSeconds": false,
-      "srcRoute": "/destinatarios/novo",
-      "dataRoute": "/destinatarios/novo.rsc",
+      "srcRoute": "/clientes/novo",
+      "dataRoute": "/clientes/novo.rsc",
       "allowHeader": [
         "host",
         "x-matched-path",
@@ -222,13 +198,37 @@
         "x-next-revalidated-tags",
         "x-next-revalidate-tag-token"
       ]
+    },
+    "/destinatarios/novo": {
+      "experimentalBypassFor": [
+        {
+          "type": "header",
+          "key": "next-action"
+        },
+        {
+          "type": "header",
+          "key": "content-type",
+          "value": "multipart/form-data;.*"
+        }
+      ],
+      "initialRevalidateSeconds": false,
+      "srcRoute": "/destinatarios/novo",
+      "dataRoute": "/destinatarios/novo.rsc",
+      "allowHeader": [
+        "host",
+        "x-matched-path",
+        "x-prerender-revalidate",
+        "x-prerender-revalidate-if-generated",
+        "x-next-revalidated-tags",
+        "x-next-revalidate-tag-token"
+      ]
     }
   },
   "dynamicRoutes": {},
   "notFoundRoutes": [],
   "preview": {
-    "previewModeId": "c42cf688ecea69d880d276a03367d422",
-    "previewModeSigningKey": "d0a09d97653cfc1e090971d6fd94aa2341ac36362042a323f880c76cf10a52d4",
-    "previewModeEncryptionKey": "41404661a226b7d491060a8804fe8e7e79b7869e3833f7350e625834efde432e"
+    "previewModeId": "2273c5a00451dfd378bb0965ad207c42",
+    "previewModeSigningKey": "a765585f4727f5e24f134946b76a78d3bac601810b3221a8e8317063855a3fb0",
+    "previewModeEncryptionKey": "c7da529edf0efbf0579e7717306c04e64a1f9c15768edfdf53f5ac96e630c7fd"
   }
 }
