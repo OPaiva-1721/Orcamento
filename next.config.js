@@ -3,8 +3,11 @@ const nextConfig = {
   // Configurações para Next.js 15
   experimental: {
     // Otimizações de performance
-    optimizePackageImports: ['lucide-react', '@prisma/client'],
+    optimizePackageImports: ['lucide-react'],
   },
+  
+  // Configuração específica para Vercel
+  serverExternalPackages: ['@prisma/client'],
   
   // Configuração para resolver problemas de build
   typescript: {
