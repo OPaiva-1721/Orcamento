@@ -133,6 +133,11 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    // Tratar dataTermino vazia como null
+    if (dataTermino === '') {
+      dataTermino = null;
+    }
+
     // Verificar se o cliente existe
     const cliente = await prisma.cliente.findUnique({
       where: { id: clienteId },
@@ -216,6 +221,8 @@ export async function POST(request: NextRequest) {
     let emailResult = null;
     if (destinatarioIds && destinatarioIds.length > 0) {
       try {
+        console.log('Tentando enviar emails automaticamente para:', destinatarioIds);
+        
         const emailResponse = await fetch(`${process.env.NEXTAUTH_URL || 'http://localhost:3000'}/api/enviar-email`, {
           method: 'POST',
           headers: {
@@ -229,6 +236,10 @@ export async function POST(request: NextRequest) {
 
         if (emailResponse.ok) {
           emailResult = await emailResponse.json();
+          console.log('Emails enviados com sucesso:', emailResult);
+        } else {
+          const errorData = await emailResponse.json();
+          console.error('Erro ao enviar emails:', errorData);
         }
       } catch (error) {
         console.error('Erro ao enviar emails automaticamente:', error);

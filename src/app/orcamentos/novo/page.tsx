@@ -71,6 +71,8 @@ export default function NovoOrcamentoPage() {
           ...formData,
           preco: parseFloat(formData.preco),
           clienteId: parseInt(formData.clienteId),
+          // Só enviar dataTermino se não estiver vazia
+          dataTermino: formData.dataTermino || null,
         }),
       });
 

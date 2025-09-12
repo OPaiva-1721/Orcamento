@@ -120,6 +120,11 @@ export async function PUT(request: NextRequest, { params }: RouteParams) {
       );
     }
 
+    // Tratar dataTermino vazia como null
+    if (dataTermino === '') {
+      dataTermino = null;
+    }
+
     // Verificar se o cliente existe (se clienteId estiver sendo atualizado)
     if (clienteId && clienteId !== orcamentoExistente.clienteId) {
       const cliente = await prisma.cliente.findUnique({
