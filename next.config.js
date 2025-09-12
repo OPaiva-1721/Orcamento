@@ -48,16 +48,16 @@ const nextConfig = {
     ];
   },
   
-  // Configurações de redirecionamento (removido temporariamente para build)
-  // async redirects() {
-  //   return [
-  //     {
-  //       source: '/',
-  //       destination: '/dashboard',
-  //       permanent: true,
-  //     },
-  //   ];
-  // },
+  // Configurações de redirecionamento
+  async redirects() {
+    return [
+      {
+        source: '/',
+        destination: '/dashboard',
+        permanent: true,
+      },
+    ];
+  },
 };
 
 module.exports = nextConfig;
