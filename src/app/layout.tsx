@@ -8,7 +8,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Sistema de Orçamentos",
+  title: "Orçamentos Águia Soluções	",
   description: "Sistema completo de gestão de orçamentos com Next.js",
 };
 

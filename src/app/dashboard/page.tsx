@@ -102,53 +102,53 @@ async function StatsCards() {
     });
 
     return (
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-        <Card>
+      <div className="grid gap-3 sm:gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
+        <Card className="hover:shadow-md transition-shadow">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Total de Clientes</CardTitle>
             <Users className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{totalClientes}</div>
+            <div className="text-xl sm:text-2xl font-bold">{totalClientes}</div>
             <p className="text-xs text-muted-foreground">
               Clientes cadastrados
             </p>
           </CardContent>
         </Card>
         
-        <Card>
+        <Card className="hover:shadow-md transition-shadow">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Orçamentos</CardTitle>
             <FileText className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{totalOrcamentos}</div>
+            <div className="text-xl sm:text-2xl font-bold">{totalOrcamentos}</div>
             <p className="text-xs text-muted-foreground">
               {orcamentosAprovados} aprovados
             </p>
           </CardContent>
         </Card>
         
-        <Card>
+        <Card className="hover:shadow-md transition-shadow">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Destinatários</CardTitle>
             <Mail className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{totalDestinatarios}</div>
+            <div className="text-xl sm:text-2xl font-bold">{totalDestinatarios}</div>
             <p className="text-xs text-muted-foreground">
               Emails cadastrados
             </p>
           </CardContent>
         </Card>
         
-        <Card>
+        <Card className="hover:shadow-md transition-shadow">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Valor Aprovado</CardTitle>
             <TrendingUp className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">
+            <div className="text-lg sm:text-2xl font-bold">
               {formatCurrency(valorTotalAprovado._sum.preco || 0)}
             </div>
             <p className="text-xs text-muted-foreground">
@@ -229,21 +229,21 @@ async function RecentOrcamentos() {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <div className="space-y-4">
+          <div className="space-y-3 sm:space-y-4">
             {orcamentos.map((orcamento: OrcamentoWithRelations, idx: number) => (
-              <div key={orcamento.id ?? idx} className="flex items-center justify-between p-4 border rounded-lg">
-                <div className="space-y-1">
-                  <p className="font-medium">{orcamento.descricao}</p>
-                  <p className="text-sm text-gray-500">
+              <div key={orcamento.id ?? idx} className="flex flex-col sm:flex-row sm:items-center sm:justify-between p-3 sm:p-4 border rounded-lg hover:bg-gray-50 transition-colors">
+                <div className="space-y-1 flex-1">
+                  <p className="font-medium text-sm sm:text-base">{orcamento.descricao}</p>
+                  <p className="text-xs sm:text-sm text-gray-500">
                     Cliente: {orcamento.cliente?.nome ?? 'Desconhecido'}
                   </p>
-                  <p className="text-sm text-gray-500">
+                  <p className="text-xs sm:text-sm text-gray-500">
                     {orcamento.destinatarios?.length ?? 0} destinatário(s)
                   </p>
                 </div>
-                <div className="text-right space-y-1">
-                  <p className="font-semibold">{formatCurrency(orcamento.preco)}</p>
-                  <p className="text-sm text-gray-500">
+                <div className="text-left sm:text-right space-y-1 mt-2 sm:mt-0 sm:ml-4">
+                  <p className="font-semibold text-sm sm:text-base">{formatCurrency(orcamento.preco)}</p>
+                  <p className="text-xs sm:text-sm text-gray-500">
                     {orcamento.createdAt ? formatDate(orcamento.createdAt as Date) : ''}
                   </p>
                 </div>
@@ -289,29 +289,29 @@ function QuickActions() {
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <div className="grid gap-3">
-          <Button asChild>
+        <div className="grid gap-2 sm:gap-3 grid-cols-1 sm:grid-cols-2">
+          <Button asChild className="h-10 sm:h-auto">
             <Link href="/clientes/novo">
               <Plus className="mr-2 h-4 w-4" />
-              Novo Cliente
+              <span className="text-sm sm:text-base">Novo Cliente</span>
             </Link>
           </Button>
-          <Button asChild variant="outline">
+          <Button asChild variant="outline" className="h-10 sm:h-auto">
             <Link href="/orcamentos/novo">
               <Plus className="mr-2 h-4 w-4" />
-              Novo Orçamento
+              <span className="text-sm sm:text-base">Novo Orçamento</span>
             </Link>
           </Button>
-          <Button asChild variant="outline">
+          <Button asChild variant="outline" className="h-10 sm:h-auto">
             <Link href="/clientes">
               <Eye className="mr-2 h-4 w-4" />
-              Ver Clientes
+              <span className="text-sm sm:text-base">Ver Clientes</span>
             </Link>
           </Button>
-          <Button asChild variant="outline">
+          <Button asChild variant="outline" className="h-10 sm:h-auto">
             <Link href="/orcamentos">
               <Eye className="mr-2 h-4 w-4" />
-              Ver Orçamentos
+              <span className="text-sm sm:text-base">Ver Orçamentos</span>
             </Link>
           </Button>
         </div>
@@ -322,10 +322,10 @@ function QuickActions() {
 
 export default function DashboardPage() {
   return (
-    <div className="space-y-6">
-      <div>
-        <h1 className="text-3xl font-bold tracking-tight">Dashboard</h1>
-        <p className="text-gray-600">
+    <div className="space-y-4 sm:space-y-6">
+      <div className="px-1">
+        <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">Dashboard</h1>
+        <p className="text-sm sm:text-base text-gray-600 mt-1">
           Visão geral do seu sistema de orçamentos
         </p>
       </div>
@@ -334,7 +334,7 @@ export default function DashboardPage() {
         <StatsCards />
       </Suspense>
 
-      <div className="grid gap-6 md:grid-cols-2">
+      <div className="grid gap-4 sm:gap-6 lg:grid-cols-2">
         <Suspense fallback={<LoadingCard />}>
           <RecentOrcamentos />
         </Suspense>
