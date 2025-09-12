@@ -172,14 +172,30 @@ function QuickActions() {
       </CardHeader>
       <CardContent>
         <div className="grid gap-2 sm:gap-3 grid-cols-1 sm:grid-cols-2">
-          {['/clientes/novo', '/orcamentos/novo', '/clientes', '/orcamentos'].map((href, idx) => (
-            <Button asChild variant={idx % 2 === 0 ? 'default' : 'outline'} key={href} className="h-10 sm:h-auto">
-              <Link href={href}>
-                <Plus className="mr-2 h-4 w-4" />
-                <span className="text-sm sm:text-base">Novo {idx % 2 === 0 ? 'Cliente' : 'Orçamento'}</span>
-              </Link>
-            </Button>
-          ))}
+          <Button asChild className="h-10 sm:h-auto">
+            <Link href="/clientes/novo">
+              <Plus className="mr-2 h-4 w-4" />
+              <span className="text-sm sm:text-base">Novo Cliente</span>
+            </Link>
+          </Button>
+          <Button asChild variant="outline" className="h-10 sm:h-auto">
+            <Link href="/orcamentos/novo">
+              <Plus className="mr-2 h-4 w-4" />
+              <span className="text-sm sm:text-base">Novo Orçamento</span>
+            </Link>
+          </Button>
+          <Button asChild variant="outline" className="h-10 sm:h-auto">
+            <Link href="/clientes">
+              <Eye className="mr-2 h-4 w-4" />
+              <span className="text-sm sm:text-base">Ver Clientes</span>
+            </Link>
+          </Button>
+          <Button asChild variant="outline" className="h-10 sm:h-auto">
+            <Link href="/orcamentos">
+              <Eye className="mr-2 h-4 w-4" />
+              <span className="text-sm sm:text-base">Ver Orçamentos</span>
+            </Link>
+          </Button>
         </div>
       </CardContent>
     </Card>
