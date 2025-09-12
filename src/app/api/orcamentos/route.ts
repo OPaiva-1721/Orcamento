@@ -226,8 +226,14 @@ export async function POST(request: NextRequest) {
         console.log('Destinatários:', destinatarioIds);
         console.log('NEXTAUTH_URL:', process.env.NEXTAUTH_URL);
         console.log('SMTP configurado:', !!process.env.SMTP_HOST);
+        console.log('SMTP_HOST:', process.env.SMTP_HOST);
+        console.log('SMTP_USER:', process.env.SMTP_USER);
+        console.log('SMTP_FROM:', process.env.SMTP_FROM);
         
-        const emailResponse = await fetch(`${process.env.NEXTAUTH_URL || 'http://localhost:3000'}/api/enviar-email`, {
+        const emailUrl = `${process.env.NEXTAUTH_URL || 'http://localhost:3000'}/api/enviar-email`;
+        console.log('URL do endpoint de email:', emailUrl);
+        
+        const emailResponse = await fetch(emailUrl, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -239,6 +245,7 @@ export async function POST(request: NextRequest) {
         });
 
         console.log('Status da resposta:', emailResponse.status);
+        console.log('Headers da resposta:', Object.fromEntries(emailResponse.headers.entries()));
         
         if (emailResponse.ok) {
           emailResult = await emailResponse.json();
@@ -246,9 +253,13 @@ export async function POST(request: NextRequest) {
         } else {
           const errorData = await emailResponse.json();
           console.error('❌ Erro ao enviar emails:', errorData);
+          console.error('Status:', emailResponse.status);
+          console.error('Status Text:', emailResponse.statusText);
         }
       } catch (error) {
         console.error('❌ Erro ao enviar emails automaticamente:', error);
+        console.error('Tipo do erro:', typeof error);
+        console.error('Stack trace:', error instanceof Error ? error.stack : 'N/A');
         // Não falha a criação do orçamento se o email falhar
       }
     } else {

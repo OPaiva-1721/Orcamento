@@ -15,10 +15,15 @@ const transporter = nodemailer.createTransport({
 
 export async function POST(request: NextRequest) {
   try {
+    console.log('=== ENDPOINT ENVIAR EMAIL CHAMADO ===');
     const body = await request.json();
     const { orcamentoId, destinatarioIds } = body;
 
+    console.log('Dados recebidos:', { orcamentoId, destinatarioIds });
+    console.log('Tipo de destinatarioIds:', typeof destinatarioIds, Array.isArray(destinatarioIds));
+
     if (!orcamentoId || !destinatarioIds || !Array.isArray(destinatarioIds)) {
+      console.error('❌ Dados inválidos recebidos');
       return NextResponse.json(
         { success: false, error: 'Orçamento ID e destinatários são obrigatórios' },
         { status: 400 }
@@ -26,6 +31,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Buscar orçamento com dados completos
+    console.log('Buscando orçamento ID:', parseInt(orcamentoId));
     const orcamento = await prisma.orcamento.findUnique({
       where: { id: parseInt(orcamentoId) },
       include: {
@@ -38,7 +44,15 @@ export async function POST(request: NextRequest) {
       },
     });
 
+    console.log('Orçamento encontrado:', !!orcamento);
+    if (orcamento) {
+      console.log('Cliente:', orcamento.cliente?.nome);
+      console.log('Destinatários encontrados:', orcamento.destinatarios.length);
+      console.log('Destinatários:', orcamento.destinatarios.map(d => ({ id: d.id, nome: d.nome, email: d.email })));
+    }
+
     if (!orcamento) {
+      console.error('❌ Orçamento não encontrado');
       return NextResponse.json(
         { success: false, error: 'Orçamento não encontrado' },
         { status: 404 }
@@ -46,6 +60,7 @@ export async function POST(request: NextRequest) {
     }
 
     if (orcamento.destinatarios.length === 0) {
+      console.error('❌ Nenhum destinatário válido encontrado');
       return NextResponse.json(
         { success: false, error: 'Nenhum destinatário válido encontrado' },
         { status: 400 }
@@ -58,8 +73,12 @@ export async function POST(request: NextRequest) {
     // Enviar email para cada destinatário
     for (const destinatario of orcamento.destinatarios) {
       try {
+        console.log(`📧 Enviando email para: ${destinatario.nome} (${destinatario.email})`);
+        
         // Gerar PDF do orçamento
+        console.log('📄 Gerando PDF do orçamento...');
         const pdfBuffer = await gerarPDFOrcamento(orcamento);
+        console.log('✅ PDF gerado com sucesso, tamanho:', pdfBuffer.length, 'bytes');
 
         // Configurar email
         const mailOptions = {
@@ -76,8 +95,17 @@ export async function POST(request: NextRequest) {
           ],
         };
 
+        console.log('📤 Configurações do email:', {
+          from: mailOptions.from,
+          to: mailOptions.to,
+          subject: mailOptions.subject,
+          attachments: mailOptions.attachments.length
+        });
+
         // Enviar email
-        await transporter.sendMail(mailOptions);
+        console.log('🚀 Enviando email via SMTP...');
+        const result = await transporter.sendMail(mailOptions);
+        console.log('✅ Email enviado com sucesso! MessageId:', result.messageId);
 
         // Registrar envio no banco
         await prisma.emailEnviado.upsert({
