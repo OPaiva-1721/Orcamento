@@ -47,198 +47,138 @@ type RouteHandlerConfig<Route extends AppRouteHandlerRoutes = AppRouteHandlerRou
 }
 
 
-// Validate ../../src/app/clientes/[id]/page.tsx
+// Validate ../../app/clientes/[id]/page.tsx
 {
-  const handler = {} as typeof import("../../src/app/clientes/[id]/page.js")
+  const handler = {} as typeof import("../../app/clientes/[id]/page.js")
   handler satisfies AppPageConfig<"/clientes/[id]">
 }
 
-// Validate ../../src/app/clientes/novo/page.tsx
+// Validate ../../app/clientes/novo/page.tsx
 {
-  const handler = {} as typeof import("../../src/app/clientes/novo/page.js")
+  const handler = {} as typeof import("../../app/clientes/novo/page.js")
   handler satisfies AppPageConfig<"/clientes/novo">
 }
 
-// Validate ../../src/app/clientes/page.tsx
+// Validate ../../app/clientes/page.tsx
 {
-  const handler = {} as typeof import("../../src/app/clientes/page.js")
+  const handler = {} as typeof import("../../app/clientes/page.js")
   handler satisfies AppPageConfig<"/clientes">
 }
 
-// Validate ../../src/app/dashboard/page.tsx
+// Validate ../../app/dashboard/page.tsx
 {
-  const handler = {} as typeof import("../../src/app/dashboard/page.js")
+  const handler = {} as typeof import("../../app/dashboard/page.js")
   handler satisfies AppPageConfig<"/dashboard">
 }
 
-// Validate ../../src/app/destinatarios/[id]/page.tsx
+// Validate ../../app/destinatarios/[id]/page.tsx
 {
-  const handler = {} as typeof import("../../src/app/destinatarios/[id]/page.js")
+  const handler = {} as typeof import("../../app/destinatarios/[id]/page.js")
   handler satisfies AppPageConfig<"/destinatarios/[id]">
 }
 
-// Validate ../../src/app/destinatarios/novo/page.tsx
+// Validate ../../app/destinatarios/novo/page.tsx
 {
-  const handler = {} as typeof import("../../src/app/destinatarios/novo/page.js")
+  const handler = {} as typeof import("../../app/destinatarios/novo/page.js")
   handler satisfies AppPageConfig<"/destinatarios/novo">
 }
 
-// Validate ../../src/app/destinatarios/page.tsx
+// Validate ../../app/destinatarios/page.tsx
 {
-  const handler = {} as typeof import("../../src/app/destinatarios/page.js")
+  const handler = {} as typeof import("../../app/destinatarios/page.js")
   handler satisfies AppPageConfig<"/destinatarios">
 }
 
-// Validate ../../src/app/orcamentos/[id]/page.tsx
+// Validate ../../app/orcamentos/[id]/page.tsx
 {
-  const handler = {} as typeof import("../../src/app/orcamentos/[id]/page.js")
+  const handler = {} as typeof import("../../app/orcamentos/[id]/page.js")
   handler satisfies AppPageConfig<"/orcamentos/[id]">
 }
 
-// Validate ../../src/app/orcamentos/novo/page.tsx
+// Validate ../../app/orcamentos/novo/page.tsx
 {
-  const handler = {} as typeof import("../../src/app/orcamentos/novo/page.js")
+  const handler = {} as typeof import("../../app/orcamentos/novo/page.js")
   handler satisfies AppPageConfig<"/orcamentos/novo">
 }
 
-// Validate ../../src/app/orcamentos/page.tsx
+// Validate ../../app/orcamentos/page.tsx
 {
-  const handler = {} as typeof import("../../src/app/orcamentos/page.js")
+  const handler = {} as typeof import("../../app/orcamentos/page.js")
   handler satisfies AppPageConfig<"/orcamentos">
 }
 
-// Validate ../../src/app/page.tsx
+// Validate ../../app/api/clientes/[id]/route.ts
 {
-  const handler = {} as typeof import("../../src/app/page.js")
-  handler satisfies AppPageConfig<"/">
-}
-
-// Validate ../../src/app/api/clientes/[id]/route.ts
-{
-  const handler = {} as typeof import("../../src/app/api/clientes/[id]/route.js")
+  const handler = {} as typeof import("../../app/api/clientes/[id]/route.js")
   handler satisfies RouteHandlerConfig<"/api/clientes/[id]">
 }
 
-// Validate ../../src/app/api/clientes/route.ts
+// Validate ../../app/api/clientes/route.ts
 {
-  const handler = {} as typeof import("../../src/app/api/clientes/route.js")
+  const handler = {} as typeof import("../../app/api/clientes/route.js")
   handler satisfies RouteHandlerConfig<"/api/clientes">
 }
 
-// Validate ../../src/app/api/debug-env/route.ts
+// Validate ../../app/api/destinatarios/[id]/route.ts
 {
-  const handler = {} as typeof import("../../src/app/api/debug-env/route.js")
-  handler satisfies RouteHandlerConfig<"/api/debug-env">
-}
-
-// Validate ../../src/app/api/debug-full/route.ts
-{
-  const handler = {} as typeof import("../../src/app/api/debug-full/route.js")
-  handler satisfies RouteHandlerConfig<"/api/debug-full">
-}
-
-// Validate ../../src/app/api/debug/route.ts
-{
-  const handler = {} as typeof import("../../src/app/api/debug/route.js")
-  handler satisfies RouteHandlerConfig<"/api/debug">
-}
-
-// Validate ../../src/app/api/destinatarios/[id]/route.ts
-{
-  const handler = {} as typeof import("../../src/app/api/destinatarios/[id]/route.js")
+  const handler = {} as typeof import("../../app/api/destinatarios/[id]/route.js")
   handler satisfies RouteHandlerConfig<"/api/destinatarios/[id]">
 }
 
-// Validate ../../src/app/api/destinatarios/route.ts
+// Validate ../../app/api/destinatarios/route.ts
 {
-  const handler = {} as typeof import("../../src/app/api/destinatarios/route.js")
+  const handler = {} as typeof import("../../app/api/destinatarios/route.js")
   handler satisfies RouteHandlerConfig<"/api/destinatarios">
 }
 
-// Validate ../../src/app/api/enviar-email/route.ts
+// Validate ../../app/api/enviar-email/route.ts
 {
-  const handler = {} as typeof import("../../src/app/api/enviar-email/route.js")
+  const handler = {} as typeof import("../../app/api/enviar-email/route.js")
   handler satisfies RouteHandlerConfig<"/api/enviar-email">
 }
 
-// Validate ../../src/app/api/gerar-pdf-editavel-simples/route.ts
+// Validate ../../app/api/gerar-pdf-editavel-simples/route.ts
 {
-  const handler = {} as typeof import("../../src/app/api/gerar-pdf-editavel-simples/route.js")
+  const handler = {} as typeof import("../../app/api/gerar-pdf-editavel-simples/route.js")
   handler satisfies RouteHandlerConfig<"/api/gerar-pdf-editavel-simples">
 }
 
-// Validate ../../src/app/api/gerar-pdf/route.ts
+// Validate ../../app/api/gerar-pdf/route.ts
 {
-  const handler = {} as typeof import("../../src/app/api/gerar-pdf/route.js")
+  const handler = {} as typeof import("../../app/api/gerar-pdf/route.js")
   handler satisfies RouteHandlerConfig<"/api/gerar-pdf">
 }
 
-// Validate ../../src/app/api/migrate/route.ts
+// Validate ../../app/api/orcamentos/[id]/destinatarios/route.ts
 {
-  const handler = {} as typeof import("../../src/app/api/migrate/route.js")
-  handler satisfies RouteHandlerConfig<"/api/migrate">
-}
-
-// Validate ../../src/app/api/orcamentos/[id]/destinatarios/route.ts
-{
-  const handler = {} as typeof import("../../src/app/api/orcamentos/[id]/destinatarios/route.js")
+  const handler = {} as typeof import("../../app/api/orcamentos/[id]/destinatarios/route.js")
   handler satisfies RouteHandlerConfig<"/api/orcamentos/[id]/destinatarios">
 }
 
-// Validate ../../src/app/api/orcamentos/[id]/route.ts
+// Validate ../../app/api/orcamentos/[id]/route.ts
 {
-  const handler = {} as typeof import("../../src/app/api/orcamentos/[id]/route.js")
+  const handler = {} as typeof import("../../app/api/orcamentos/[id]/route.js")
   handler satisfies RouteHandlerConfig<"/api/orcamentos/[id]">
 }
 
-// Validate ../../src/app/api/orcamentos/route.ts
+// Validate ../../app/api/orcamentos/route.ts
 {
-  const handler = {} as typeof import("../../src/app/api/orcamentos/route.js")
+  const handler = {} as typeof import("../../app/api/orcamentos/route.js")
   handler satisfies RouteHandlerConfig<"/api/orcamentos">
 }
 
-// Validate ../../src/app/api/test-all-configs/route.ts
+
+
+
+
+// Validate ../../app/dashboard/layout.tsx
 {
-  const handler = {} as typeof import("../../src/app/api/test-all-configs/route.js")
-  handler satisfies RouteHandlerConfig<"/api/test-all-configs">
-}
-
-// Validate ../../src/app/api/test-connection/route.ts
-{
-  const handler = {} as typeof import("../../src/app/api/test-connection/route.js")
-  handler satisfies RouteHandlerConfig<"/api/test-connection">
-}
-
-// Validate ../../src/app/api/test-db/route.ts
-{
-  const handler = {} as typeof import("../../src/app/api/test-db/route.js")
-  handler satisfies RouteHandlerConfig<"/api/test-db">
-}
-
-// Validate ../../src/app/api/test-supabase/route.ts
-{
-  const handler = {} as typeof import("../../src/app/api/test-supabase/route.js")
-  handler satisfies RouteHandlerConfig<"/api/test-supabase">
-}
-
-// Validate ../../src/app/api/test/route.ts
-{
-  const handler = {} as typeof import("../../src/app/api/test/route.js")
-  handler satisfies RouteHandlerConfig<"/api/test">
-}
-
-
-
-
-
-// Validate ../../src/app/dashboard/layout.tsx
-{
-  const handler = {} as typeof import("../../src/app/dashboard/layout.js")
+  const handler = {} as typeof import("../../app/dashboard/layout.js")
   handler satisfies LayoutConfig<"/dashboard">
 }
 
-// Validate ../../src/app/layout.tsx
+// Validate ../../app/layout.tsx
 {
-  const handler = {} as typeof import("../../src/app/layout.js")
+  const handler = {} as typeof import("../../app/layout.js")
   handler satisfies LayoutConfig<"/">
 }
