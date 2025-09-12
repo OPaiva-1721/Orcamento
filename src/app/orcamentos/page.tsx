@@ -36,7 +36,7 @@ interface Orcamento {
   status: string;
   formaPagamento: boolean;
   dataInicio: string;
-  dataTermino: string;
+  dataTermino: string | null;
   createdAt: string;
   cliente: Cliente;
   destinatarios: Destinatario[];

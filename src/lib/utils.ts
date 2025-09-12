@@ -21,7 +21,8 @@ export function formatCurrency(value: number): string {
 /**
  * Formata uma data para o padrão brasileiro
  */
-export function formatDate(date: Date | string): string {
+export function formatDate(date: Date | string | null): string {
+  if (!date) return '--/--/----';
   const dateObj = typeof date === 'string' ? new Date(date) : date;
   return new Intl.DateTimeFormat('pt-BR', {
     day: '2-digit',

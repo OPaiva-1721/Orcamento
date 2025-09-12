@@ -115,7 +115,7 @@ export async function PUT(request: NextRequest, { params }: RouteParams) {
 
     // Tratar dataTermino vazia como null
     if (!dataTermino || dataTermino.toString() === '') {
-        dataTermino = new Date("--/--/----");
+        dataTermino = undefined;
     }
 
     if (dataInicio && dataTermino && new Date(dataInicio) >= new Date(dataTermino)) {
