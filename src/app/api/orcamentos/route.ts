@@ -134,9 +134,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Tratar dataTermino vazia como null
-    if (!dataTermino || dataTermino === '' || dataTermino === '--/--/----') {
-      dataTermino = null;
-    }
+    const finalDataTermino = (!dataTermino || (typeof dataTermino === 'string' && dataTermino === '')) ? null : dataTermino;
 
     // Verificar se o cliente existe
     const cliente = await prisma.cliente.findUnique({
@@ -193,8 +191,8 @@ export async function POST(request: NextRequest) {
       },
     };
 
-    if (dataTermino) {
-      orcamentoData.dataTermino = new Date(dataTermino);
+    if (finalDataTermino) {
+      orcamentoData.dataTermino = new Date(finalDataTermino);
     }
 
     const orcamento = await prisma.orcamento.create({
