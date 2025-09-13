@@ -178,7 +178,7 @@ function QuickActions() {
               <span className="text-sm sm:text-base">Novo Cliente</span>
             </Link>
           </Button>
-          <Button asChild variant="outline" className="h-10 sm:h-auto">
+          <Button asChild className="h-10 sm:h-auto">
             <Link href="/orcamentos/novo">
               <Plus className="mr-2 h-4 w-4" />
               <span className="text-sm sm:text-base">Novo Orçamento</span>
