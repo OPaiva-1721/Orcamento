@@ -50,19 +50,19 @@ export class SendOrcamentoEmailUseCase {
       cmd.destinatarioIds.includes(d.id),
     );
 
+    const pdfBuffer = await this.pdfService.gerarPDF({
+      id: orcamento.id,
+      descricao: orcamento.descricao,
+      preco: orcamento.preco,
+      formaPagamento: orcamento.formaPagamento,
+      cliente: { nome: orcamento.cliente!.nome },
+    });
+
     const results: EmailResult[] = [];
 
     for (const dest of destinatarios) {
       try {
         this.logger.log(`Enviando email para ${dest.nome} (${dest.email})`);
-
-        const pdfBuffer = await this.pdfService.gerarPDF({
-          id: orcamento.id,
-          descricao: orcamento.descricao,
-          preco: orcamento.preco,
-          formaPagamento: orcamento.formaPagamento,
-          cliente: { nome: orcamento.cliente!.nome },
-        });
 
         const html = this.pdfService.gerarHTMLEmail(
           {
