@@ -22,6 +22,7 @@ import { DashboardModule } from './presentation/http/dashboard/dashboard.module'
 import { FirebaseAuthGuard } from './presentation/http/guards/firebase-auth.guard';
 import { ResponseTransformInterceptor } from './presentation/http/interceptors/response-transform.interceptor';
 import { DomainExceptionFilter } from './presentation/http/filters/domain-exception.filter';
+import { AllExceptionsFilter } from './presentation/http/filters/all-exceptions.filter';
 
 @Module({
   imports: [
@@ -52,6 +53,9 @@ import { DomainExceptionFilter } from './presentation/http/filters/domain-except
     { provide: APP_GUARD, useClass: FirebaseAuthGuard },
     // Envolve todas as respostas em { success: true, data: ... }
     { provide: APP_INTERCEPTOR, useClass: ResponseTransformInterceptor },
+    // Captura qualquer exceção não tratada — deve vir antes para que o mais
+    // específico (DomainExceptionFilter) tome precedência sobre DomainException
+    { provide: APP_FILTER, useClass: AllExceptionsFilter },
     // Mapeia domain exceptions para HTTP status codes corretos
     { provide: APP_FILTER, useClass: DomainExceptionFilter },
   ],
