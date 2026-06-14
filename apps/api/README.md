@@ -74,9 +74,9 @@ O `uid` do token é usado como `ownerId` em todas as queries — isolamento mult
 | Método | Rota | Descrição |
 |---|---|---|
 | `GET` | `/dashboard/stats` | Estatísticas do dashboard |
-| `POST` | `/enviar-email` | Enviar PDF por email (rate limit: 5/min) |
-| `POST` | `/gerar-pdf` | Gerar PDF padrão (binário) |
-| `POST` | `/gerar-pdf-editavel` | Gerar PDF com campos editáveis |
+| `POST` | `/orcamentos/:id/emails` | Enviar PDF por email (rate limit: 5/min) |
+| `GET` | `/orcamentos/:id/pdf` | Gerar PDF padrão (binário) |
+| `GET` | `/orcamentos/:id/pdf?tipo=editavel` | Gerar PDF com campos editáveis |
 
 ## Status de Orçamento
 
@@ -132,6 +132,6 @@ pnpm --filter api test:cov      # cobertura
 
 - `helmet()` — headers HTTP seguros
 - `ValidationPipe` com `whitelist: true` e `forbidNonWhitelisted: true`
-- Throttle global + rate limit específico em `/enviar-email` (5 req/min)
+- Throttle global + rate limit específico em `POST /orcamentos/:id/emails` (5 req/min)
 - `trust proxy 1` para IP real via `X-Forwarded-For` (atrás do nginx)
 - Stack traces nunca expostos em produção (`AllExceptionsFilter`)

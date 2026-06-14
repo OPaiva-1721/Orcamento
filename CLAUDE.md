@@ -76,9 +76,9 @@ GET/PUT/DELETE  /destinatarios/:id
 GET/POST        /orcamentos             ?clienteId= ?status= ?page= ?limit=
 GET/PUT/DELETE  /orcamentos/:id
 GET             /dashboard/stats
-POST            /enviar-email           rate limit: 5/min
-POST            /gerar-pdf              retorna binário PDF
-POST            /gerar-pdf-editavel     retorna binário PDF editável
+POST            /orcamentos/:id/emails          rate limit: 5/min
+GET             /orcamentos/:id/pdf             retorna binário PDF
+GET             /orcamentos/:id/pdf?tipo=editavel  retorna binário PDF editável
 ```
 
 ## Web (`apps/web`)

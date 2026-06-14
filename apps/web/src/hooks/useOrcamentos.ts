@@ -52,6 +52,7 @@ export function useDeleteOrcamento() {
 
 export function useSendEmail() {
   return useMutation<any, Error, { orcamentoId: number; destinatarioIds: number[] }>({
-    mutationFn: (data) => api.post('/enviar-email', data),
+    mutationFn: ({ orcamentoId, destinatarioIds }) =>
+      api.post(`/orcamentos/${orcamentoId}/emails`, { destinatarioIds }),
   });
 }

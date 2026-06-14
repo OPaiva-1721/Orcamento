@@ -34,10 +34,10 @@ export function OrcamentosPage() {
   }
 
   async function handleGerarPDF(orcamentoId: number, editavel = false) {
-    const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/${editavel ? 'gerar-pdf-editavel' : 'gerar-pdf'}`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${await (await import('firebase/auth')).getAuth().currentUser?.getIdToken()}` },
-      body: JSON.stringify({ orcamentoId }),
+    const url = `${import.meta.env.VITE_API_BASE_URL}/orcamentos/${orcamentoId}/pdf${editavel ? '?tipo=editavel' : ''}`;
+    const res = await fetch(url, {
+      method: 'GET',
+      headers: { 'Authorization': `Bearer ${await (await import('firebase/auth')).getAuth().currentUser?.getIdToken()}` },
     });
     const blob = await res.blob();
     const url  = URL.createObjectURL(blob);
