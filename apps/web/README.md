@@ -1,73 +1,98 @@
-# React + TypeScript + Vite
+# Web — Sistema de Orçamentos
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+React 19 + Vite 8 SPA. Porta de desenvolvimento: **5173**.
 
-Currently, two official plugins are available:
+## Stack
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- **React 19** + **TypeScript 6**
+- **Vite 8** — build e dev server
+- **React Router v7** — roteamento client-side
+- **TanStack Query v5** — cache e estado de servidor
+- **Firebase** — autenticação (email/senha)
+- **Tailwind CSS 4** + `lucide-react`
+- **`@orcamento/shared-types`** — tipos compartilhados com a API
 
-## React Compiler
+## Estrutura
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```
+src/
+├── contexts/
+│   └── AuthContext.tsx     # Firebase auth state (user, signIn, signOut)
+├── hooks/
+│   ├── useClientes.ts
+│   ├── useDestinatarios.ts
+│   └── useOrcamentos.ts    # React Query hooks para cada recurso
+├── lib/
+│   ├── api-client.ts       # fetch wrapper com Firebase token + ApiError
+│   ├── firebase.ts         # inicialização do Firebase client
+│   ├── config.ts
+│   └── utils.ts
+├── pages/
+│   ├── LoginPage.tsx
+│   ├── DashboardPage.tsx
+│   ├── clientes/           # list / novo / editar
+│   ├── destinatarios/      # list / novo / editar
+│   └── orcamentos/         # list / novo / editar
+├── components/
+│   └── layout/
+│       ├── Layout.tsx
+│       ├── Sidebar.tsx
+│       └── BottomNavigation.tsx
+└── router.tsx              # definição das rotas protegidas
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Autenticação
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+Firebase email/senha no lado cliente. `AuthContext` expõe `user`, `loading`, `signIn`, `signOut`.
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+Todas as chamadas à API incluem automaticamente o Firebase ID Token:
+
+```ts
+// lib/api-client.ts
+headers['Authorization'] = `Bearer ${await user.getIdToken()}`;
 ```
+
+Rotas protegidas redirecionam para `/login` quando `user === null`.
+
+## Variáveis de Ambiente
+
+Crie `apps/web/.env`:
+
+```env
+VITE_API_BASE_URL=http://localhost:3001
+VITE_FIREBASE_API_KEY=
+VITE_FIREBASE_AUTH_DOMAIN=
+VITE_FIREBASE_PROJECT_ID=
+VITE_FIREBASE_APP_ID=
+```
+
+## Desenvolvimento
+
+```bash
+# Na raiz do monorepo
+pnpm --filter web dev
+# http://localhost:5173
+
+# Ou via Turborepo (inicia API + Web juntos)
+pnpm dev
+```
+
+## Build
+
+```bash
+pnpm --filter web build   # gera dist/
+pnpm --filter web preview # serve o build localmente
+```
+
+## Comunicação com a API
+
+`lib/api-client.ts` exporta helpers tipados:
+
+```ts
+api.get<Cliente[]>('/clientes')
+api.post<Orcamento>('/orcamentos', body)
+api.put<Cliente>('/clientes/1', body)
+api.delete('/clientes/1')
+```
+
+Respostas no formato `{ success: true, data: T }` são desempacotadas automaticamente. Erros lançam `ApiError` com `status` e `code`.
