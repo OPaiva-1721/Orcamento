@@ -110,7 +110,8 @@ export class DestinatarioDrizzleRepository implements IDestinatarioRepository {
     ownerId: string,
   ): Promise<Destinatario> {
     const cliente = await this.assertClienteOwned(data.clienteId, ownerId);
-    if (!cliente) throw new ForbiddenResourceException('Cliente não pertence ao usuário');
+    if (!cliente)
+      throw new ForbiddenResourceException('Cliente não pertence ao usuário');
     try {
       const [row] = await this.db
         .insert(destinatarios)
@@ -134,14 +135,16 @@ export class DestinatarioDrizzleRepository implements IDestinatarioRepository {
     data: UpdateDestinatarioData,
   ): Promise<Destinatario> {
     const existing = await this.findById(id, ownerId);
-    if (!existing) throw new ResourceNotFoundException('Destinatário não encontrado');
+    if (!existing)
+      throw new ResourceNotFoundException('Destinatário não encontrado');
 
     if (data.clienteId !== undefined && data.clienteId !== existing.clienteId) {
       const novoCliente = await this.assertClienteOwned(
         data.clienteId,
         ownerId,
       );
-      if (!novoCliente) throw new ForbiddenResourceException('Cliente não pertence ao usuário');
+      if (!novoCliente)
+        throw new ForbiddenResourceException('Cliente não pertence ao usuário');
     }
 
     try {
@@ -165,7 +168,8 @@ export class DestinatarioDrizzleRepository implements IDestinatarioRepository {
 
   async delete(id: number, ownerId: string): Promise<void> {
     const existing = await this.findById(id, ownerId);
-    if (!existing) throw new ResourceNotFoundException('Destinatário não encontrado');
+    if (!existing)
+      throw new ResourceNotFoundException('Destinatário não encontrado');
     await this.db.delete(destinatarios).where(eq(destinatarios.id, id));
   }
 

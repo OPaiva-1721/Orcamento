@@ -107,7 +107,8 @@ export class OrcamentoDrizzleRepository implements IOrcamentoRepository {
           eq(clientes.ownerId, ownerId),
         ),
       });
-      if (!cliente) throw new ForbiddenResourceException('Cliente não pertence ao usuário');
+      if (!cliente)
+        throw new ForbiddenResourceException('Cliente não pertence ao usuário');
 
       const [row] = await tx
         .insert(orcamentos)
@@ -132,7 +133,9 @@ export class OrcamentoDrizzleRepository implements IOrcamentoRepository {
           (d: any) => d.clienteId === data.clienteId,
         );
         if (validDest.length !== data.destinatarioIds.length) {
-          throw new ForbiddenResourceException('Destinatário não pertence ao usuário');
+          throw new ForbiddenResourceException(
+            'Destinatário não pertence ao usuário',
+          );
         }
         await tx.insert(orcamentosDestinatarios).values(
           data.destinatarioIds.map((did) => ({
@@ -189,7 +192,10 @@ export class OrcamentoDrizzleRepository implements IOrcamentoRepository {
             eq(clientes.ownerId, ownerId),
           ),
         });
-        if (!novoCliente) throw new ForbiddenResourceException('Cliente não pertence ao usuário');
+        if (!novoCliente)
+          throw new ForbiddenResourceException(
+            'Cliente não pertence ao usuário',
+          );
         updateData.clienteId = data.clienteId;
       }
 
@@ -209,7 +215,9 @@ export class OrcamentoDrizzleRepository implements IOrcamentoRepository {
             (d: any) => d.clienteId === targetClienteId,
           );
           if (validDest.length !== data.destinatarioIds.length) {
-            throw new ForbiddenResourceException('Destinatário não pertence ao usuário');
+            throw new ForbiddenResourceException(
+              'Destinatário não pertence ao usuário',
+            );
           }
           await tx.insert(orcamentosDestinatarios).values(
             data.destinatarioIds.map((did) => ({
@@ -267,7 +275,9 @@ export class OrcamentoDrizzleRepository implements IOrcamentoRepository {
           (d: any) => d.clienteId === orcamento.clienteId,
         );
         if (validDest.length !== destinatarioIds.length)
-          throw new ForbiddenResourceException('Destinatário não pertence ao usuário');
+          throw new ForbiddenResourceException(
+            'Destinatário não pertence ao usuário',
+          );
       }
 
       await tx

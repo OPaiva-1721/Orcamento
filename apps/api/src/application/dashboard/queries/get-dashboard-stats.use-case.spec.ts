@@ -28,7 +28,11 @@ describe('GetDashboardStatsUseCase', () => {
       findAll: jest.fn(),
     } as unknown as jest.Mocked<IDestinatarioRepository>;
 
-    useCase = new GetDashboardStatsUseCase(orcamentoRepo, clienteRepo, destRepo);
+    useCase = new GetDashboardStatsUseCase(
+      orcamentoRepo,
+      clienteRepo,
+      destRepo,
+    );
   });
 
   it('usa a agregação do banco para o valor total aprovado (sem teto de 100)', async () => {

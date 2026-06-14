@@ -52,7 +52,10 @@ describe('CreateOrcamentoUseCase (escopo multi-tenant)', () => {
     await expect(useCase.execute(baseDto, ownerId)).rejects.toBeInstanceOf(
       ClienteNotFoundException,
     );
-    expect(clienteRepo.findById).toHaveBeenCalledWith(baseDto.clienteId, ownerId);
+    expect(clienteRepo.findById).toHaveBeenCalledWith(
+      baseDto.clienteId,
+      ownerId,
+    );
     expect(orcamentoRepo.create).not.toHaveBeenCalled();
   });
 
