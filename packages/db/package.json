@@ -2,12 +2,13 @@
   "name": "@orcamento/db",
   "version": "0.1.0",
   "private": true,
-  "main": "./src/index.ts",
+  "main": "./dist/index.js",
   "types": "./src/index.ts",
   "exports": {
-    ".": "./src/index.ts"
+    ".": "./dist/index.js"
   },
   "scripts": {
+    "build": "tsc -p tsconfig.json",
     "db:generate": "drizzle-kit generate",
     "db:migrate": "drizzle-kit migrate",
     "db:push": "drizzle-kit push",
@@ -21,7 +22,6 @@
   "devDependencies": {
     "@types/node": "^22.10.2",
     "@types/pg": "^8.11.10",
-    "drizzle-kit": "^0.30.0",
-    "typescript": "^5.7.2"
+    "drizzle-kit": "^0.30.0"
   }
 }

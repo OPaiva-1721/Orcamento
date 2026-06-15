@@ -28,13 +28,24 @@ FROM nginx:stable-alpine AS runner
 
 COPY --from=builder /app/apps/web/dist /usr/share/nginx/html
 
-# SPA fallback: redirect all 404s to index.html so React Router works
-RUN echo 'server { \
-  listen 80; \
-  root /usr/share/nginx/html; \
-  index index.html; \
-  location / { try_files $uri $uri/ /index.html; } \
-}' > /etc/nginx/conf.d/default.conf
+# SPA + reverse proxy: /api/ → api:3001/ ; fallback for React Router
+RUN printf '%s\n' \
+  'server {' \
+  '  listen 80;' \
+  '  client_max_body_size 20m;' \
+  '  root /usr/share/nginx/html;' \
+  '  index index.html;' \
+  '  location /api/ {' \
+  '    proxy_pass http://api:3001/;' \
+  '    proxy_http_version 1.1;' \
+  '    proxy_set_header Host $host;' \
+  '    proxy_set_header X-Real-IP $remote_addr;' \
+  '    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;' \
+  '    proxy_set_header X-Forwarded-Proto $scheme;' \
+  '    proxy_set_header Authorization $http_authorization;' \
+  '  }' \
+  '  location / { try_files $uri $uri/ /index.html; }' \
+  '}' > /etc/nginx/conf.d/default.conf
 
 EXPOSE 80
 

@@ -11,6 +11,9 @@ importers:
       turbo:
         specifier: ^2.3.3
         version: 2.9.6
+      typescript:
+        specifier: ^5.7.2
+        version: 5.9.3
 
   apps/api:
     dependencies:
@@ -251,9 +254,6 @@ importers:
       drizzle-kit:
         specifier: ^0.30.0
         version: 0.30.6
-      typescript:
-        specifier: ^5.7.2
-        version: 5.9.3
 
   packages/pdf:
     dependencies:
@@ -264,9 +264,6 @@ importers:
       '@types/node':
         specifier: ^22.10.2
         version: 22.19.17
-      typescript:
-        specifier: ^5.7.2
-        version: 5.9.3
 
   packages/shared-types: {}
 

@@ -99,7 +99,7 @@ export class OrcamentoDrizzleRepository implements IOrcamentoRepository {
     data: CreateOrcamentoWithHistory,
     ownerId: string,
   ): Promise<Orcamento> {
-    return this.db.transaction(async (tx: any) => {
+    const createdId = await this.db.transaction(async (tx: any) => {
       // Validar que cliente pertence ao owner antes inserir
       const cliente = await tx.query.clientes.findFirst({
         where: and(
@@ -155,8 +155,13 @@ export class OrcamentoDrizzleRepository implements IOrcamentoRepository {
         );
       }
 
-      return this.findById(row.id, ownerId) as Promise<Orcamento>;
+      return row.id as number;
     });
+
+    const fresh = await this.findById(createdId, ownerId);
+    if (!fresh)
+      throw new ResourceNotFoundException('Orçamento criado mas não encontrado');
+    return fresh;
   }
 
   async update(
@@ -164,7 +169,7 @@ export class OrcamentoDrizzleRepository implements IOrcamentoRepository {
     ownerId: string,
     data: UpdateOrcamentoWithHistory,
   ): Promise<Orcamento> {
-    return this.db.transaction(async (tx: any) => {
+    await this.db.transaction(async (tx: any) => {
       const existing = await tx.query.orcamentos.findFirst({
         where: eq(orcamentos.id, id),
         with: { cliente: true },
@@ -238,8 +243,12 @@ export class OrcamentoDrizzleRepository implements IOrcamentoRepository {
         );
       }
 
-      return this.findById(id, ownerId) as Promise<Orcamento>;
     });
+
+    const fresh = await this.findById(id, ownerId);
+    if (!fresh)
+      throw new ResourceNotFoundException('Orçamento não encontrado');
+    return fresh;
   }
 
   async delete(id: number, ownerId: string): Promise<void> {

@@ -40,12 +40,12 @@ export function OrcamentosPage() {
       headers: { 'Authorization': `Bearer ${await (await import('firebase/auth')).getAuth().currentUser?.getIdToken()}` },
     });
     const blob = await res.blob();
-    const url  = URL.createObjectURL(blob);
+    const objectUrl = URL.createObjectURL(blob);
     const a    = document.createElement('a');
-    a.href     = url;
+    a.href     = objectUrl;
     a.download = `orcamento_${orcamentoId}${editavel ? '_editavel' : ''}.pdf`;
     a.click();
-    URL.revokeObjectURL(url);
+    URL.revokeObjectURL(objectUrl);
   }
 
   return (
